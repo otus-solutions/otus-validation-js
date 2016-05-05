@@ -8,7 +8,9 @@
 *.iml
 *.swp
 *.swo
-npm-debug.log
 **/unit-result.report.html
 **/node_modules/
+/**/env.properties
+/**/npm-debug.log.*
+
 
