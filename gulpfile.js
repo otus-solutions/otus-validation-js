@@ -17,8 +17,9 @@
     gulp.task('compress', function() {
         gulp.src('app/**/*.js')
             .pipe(concat('otus-validation.js'))
-            .pipe(uglify())
-            .pipe(minify())
+            .pipe(minify({
+                'mangle': false
+            }))
             .pipe(gulp.dest('dist'));
     });
 
