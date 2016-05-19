@@ -27,7 +27,10 @@
 
         function execute() {
             if (self.status) {
-                ValidationHubService.validators[name].execute(model, data);
+                var validationResponse = ValidationHubService.validators[self.name].execute(model, self.data);
+                validationResponse.name = self.name;
+
+                return validationResponse;
             }
         }
     }

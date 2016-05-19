@@ -45,9 +45,12 @@
         // TODO Invova os validadores de todos
         // elementos previamente registrados
         function validateAllElements() {
+            var allElements = ValidationPoolService.fetchAll();
 
+            allElements.forEach(function(element, index, array) {
+                element.runAllValidators();
+            });
         }
-
     }
 
 }());

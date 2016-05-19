@@ -5,15 +5,15 @@
         .module('otus.validation')
         .service('MandatoryValidatorService', MandatoryValidatorService);
 
-    function MandatoryValidatorService() {
+    MandatoryValidatorService.$inject = ['ValidationResponseFactory'];
+
+    function MandatoryValidatorService(ValidationResponseFactory) {
         var self = this;
         self.execute = execute;
 
         function execute(model, data) {
-            console.log('EXECUTE');
-            console.log(model);
-            console.log(data);
-            return false;
+            var result = !(typeof model == 'undefined' || model.length == 0);
+            return ValidationResponseFactory.create(model, data, result);
         }
     }
 
