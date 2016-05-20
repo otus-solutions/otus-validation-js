@@ -5,15 +5,15 @@
         .module('otus.validation')
         .service('MaxLengthValidatorService', MaxLengthValidatorService);
 
-    MaxLengthValidatorService.$inject = ['ValidationResponseFactory'];
+    MaxLengthValidatorService.$inject = ['ValidatorResponseFactory'];
 
-    function MaxLengthValidatorService(ValidationResponseFactory) {
+    function MaxLengthValidatorService(ValidatorResponseFactory) {
         var self = this;
         self.execute = execute;
 
         function execute(model, data) {
             var result = (model.length <= data.size);
-            return ValidationResponseFactory.create(model, data, result);
+            return ValidatorResponseFactory.create(model, data, result);
         }
     }
 

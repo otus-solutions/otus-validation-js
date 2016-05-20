@@ -5,15 +5,15 @@
         .module('otus.validation')
         .service('FutureDateValidatorService', FutureDateValidatorService);
 
-    FutureDateValidatorService.$inject = ['ValidationResponseFactory'];
+    FutureDateValidatorService.$inject = ['ValidatorResponseFactory'];
 
-    function FutureDateValidatorService(ValidationResponseFactory) {
+    function FutureDateValidatorService(ValidatorResponseFactory) {
         var self = this;
         self.execute = execute;
 
         function execute(model, data) {
             var result = (model > new Date());
-            return ValidationResponseFactory.create(model, data, result);
+            return ValidatorResponseFactory.create(model, data, result);
         }
     }
 

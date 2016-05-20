@@ -5,20 +5,20 @@
         .module('otus.validation')
         .factory('ElementRegisterFactory', ElementRegisterFactory);
 
-    ElementRegisterFactory.$inject = ['ValidatorFactory'];
+    ElementRegisterFactory.$inject = ['ValidatorFactory', 'ValidationResponseFactory'];
 
-    function ElementRegisterFactory(ValidatorFactory) {
+    function ElementRegisterFactory(ValidatorFactory, ValidationResponseFactory) {
         var self = this;
         self.create = create;
 
         function create(id, model) {
-            return new ElementRegister(id, model, ValidatorFactory);
+            return new ElementRegister(id, model, ValidatorFactory, ValidationResponseFactory);
         }
 
         return self;
     }
 
-    function ElementRegister(id, model, ValidatorFactory) {
+    function ElementRegister(id, model, ValidatorFactory, ValidationResponseFactory) {
         var self = this;
         self.id = id;
         self.model = model;
@@ -32,13 +32,13 @@
         }
 
         function runAllValidators(callback) {
-            var response = [];
+            var validationResponse = ValidationResponseFactory.create(self.id);
 
             self.validators.forEach(function(element, index, array) {
-                response.push(element.execute());
+                validationResponse.addValidatorResponse(element.execute());
             });
 
-            callback(response);
+            callback(validationResponse);
         }
     }
 

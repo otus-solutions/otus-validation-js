@@ -3,20 +3,20 @@
 
     angular
         .module('otus.validation')
-        .factory('ValidationResponseFactory', ValidationResponseFactory);
+        .factory('ValidatorResponseFactory', ValidatorResponseFactory);
 
-    function ValidationResponseFactory() {
+    function ValidatorResponseFactory() {
         var self = this;
         self.create = create;
 
         function create(reference, data, result) {
-            return new ValidationResponse(reference, data, result);
+            return new ValidatorResponse(reference, data, result);
         }
 
         return self;
     }
 
-    function ValidationResponse(reference, data, result) {
+    function ValidatorResponse(reference, data, result) {
         var self = this;
         self.name = {};
         self.reference = reference;

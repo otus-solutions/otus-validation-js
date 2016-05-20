@@ -5,15 +5,15 @@
         .module('otus.validation')
         .service('DistinctValidatorService', DistinctValidatorService);
 
-    DistinctValidatorService.$inject = ['ValidationResponseFactory'];
+    DistinctValidatorService.$inject = ['ValidatorResponseFactory'];
 
-    function DistinctValidatorService(ValidationResponseFactory) {
+    function DistinctValidatorService(ValidatorResponseFactory) {
         var self = this;
         self.execute = execute;
 
         function execute(model, data) {
             var result = (model != data.reference);
-            return ValidationResponseFactory.create(model, data, result);
+            return ValidatorResponseFactory.create(model, data, result);
         }
     }
 

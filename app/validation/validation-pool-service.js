@@ -12,6 +12,7 @@
         self.remove = remove;
         self.fetch = fetch;
         self.fetchAll = fetchAll;
+        self.initPool = initPool;
 
         initPool();
 
@@ -26,17 +27,21 @@
         function remove(idElementRegister) {
             self.pool.forEach(function(element, index, array) {
                 if (element.id === idElementRegister) {
-                    self.pool.remove(index);
+                    self.pool.splice(index, 1);
                 }
             });
         }
 
         function fetch(idElementRegister) {
+            var founded = {};
+
             self.pool.forEach(function(element, index, array) {
                 if (element.id === idElementRegister) {
-                    return element;
+                    founded = element;
                 }
             });
+
+            return founded;
         }
 
         function fetchAll() {

@@ -5,15 +5,15 @@
         .module('otus.validation')
         .service('MinDateValidatorService', MinDateValidatorService);
 
-    MinDateValidatorService.$inject = ['ValidationResponseFactory'];
+    MinDateValidatorService.$inject = ['ValidatorResponseFactory'];
 
-    function MinDateValidatorService(ValidationResponseFactory) {
+    function MinDateValidatorService(ValidatorResponseFactory) {
         var self = this;
         self.execute = execute;
 
         function execute(model, data) {
             var result = (model >= data.reference);
-            return ValidationResponseFactory.create(model, data, result);
+            return ValidatorResponseFactory.create(model, data, result);
         }
     }
 

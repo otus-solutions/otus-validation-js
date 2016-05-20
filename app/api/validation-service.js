@@ -24,32 +24,36 @@
             ValidationPoolService.initPool();
         }
 
-        // TODO Registra um elemento que sera validado
-        // quando invocado 
         function registerElement(elementRegister) {
             ValidationPoolService.persist(elementRegister);
         }
 
-        // TODO Remove do Pool de Elementos registrados
-        // um determinado elemento
         function unregisterElement(elementRegister) {
             ValidationPoolService.remove(elementRegister);
         }
 
-        // TODO Invova os validadores de um determinado
-        // elemento previamente registrado
-        function validateElement() {
+        function validateElement(idElementRegister, callback) {
+            var response = [];
 
+            var elementRegister = ValidationPoolService.fetch(idElementRegister);
+            elementRegister.runAllValidators(function(responseElement) {
+                response.push(responseElement);
+            });
+
+            callback(response);
         }
 
-        // TODO Invova os validadores de todos
-        // elementos previamente registrados
-        function validateAllElements() {
+        function validateAllElements(callback) {
+            var response = [];
             var allElements = ValidationPoolService.fetchAll();
 
             allElements.forEach(function(element, index, array) {
-                element.runAllValidators();
+                element.runAllValidators(function(responseElement) {
+                    response.push(responseElement);
+                });
             });
+
+            callback(response);
         }
     }
 

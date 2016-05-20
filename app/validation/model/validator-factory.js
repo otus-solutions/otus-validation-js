@@ -21,12 +21,12 @@
     function Validator(name, data, model, ValidationHubService) {
         var self = this;
         self.name = name;
-        self.status = true;
+        self.enable = true;
         self.data = data;
         self.execute = execute;
 
         function execute() {
-            if (self.status) {
+            if (self.enable) {
                 var validationResponse = ValidationHubService.validators[self.name].execute(model, self.data);
                 validationResponse.name = self.name;
 
