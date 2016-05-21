@@ -31,26 +31,25 @@
             ValidationPoolService.initPool();
         }
 
-        // TODO Registra um elemento que sera validado
-        // quando invocado 
         function registerElement(elementRegister) {
             ValidationPoolService.persist(elementRegister);
         }
 
-        // TODO Remove do Pool de Elementos registrados
-        // um determinado elemento
         function unregisterElement(elementRegister) {
             ValidationPoolService.remove(elementRegister);
         }
 
-        // TODO Invova os validadores de um determinado
-        // elemento previamente registrado
-        function validateElement() {
+        function validateElement(idElementRegister, callback) {
+            var response = [];
 
+            var elementRegister = ValidationPoolService.fetch(idElementRegister);
+            elementRegister.runAllValidators(function(responseElement) {
+                response.push(responseElement);
+            });
+
+            callback(response);
         }
 
-        // TODO Invova os validadores de todos
-        // elementos previamente registrados
         function validateAllElements(callback) {
             var response = [];
             var allElements = ValidationPoolService.fetchAll();
@@ -76,14 +75,12 @@
 
     ValidationHubService.$inject = ['MandatoryValidatorService', 'DistinctValidatorService', 'FutureDateValidatorService',
         'DateInValidatorService', 'LowerLimitValidatorService', 'MaxDateValidatorService', 'MaxLengthValidatorService',
-        'MaxTimeValidatorService', 'MinDateValidatorService', 'MinLengthValidatorService', 'MinTimeValidatorService',
-	'PastDateValidatorService', 'UpperLimitValidatorService'
+        'MinDateValidatorService', 'MinLengthValidatorService', 'PastDateValidatorService', 'UpperLimitValidatorService'
     ];
 
     function ValidationHubService(MandatoryValidatorService, DistinctValidatorService, FutureDateValidatorService,
         DateInValidatorService, LowerLimitValidatorService, MaxDateValidatorService, MaxLengthValidatorService,
-        MaxTimeValidatorService, MinDateValidatorService, MinLengthValidatorService, MinTimeValidatorService,
-	PastDateValidatorService, UpperLimitValidatorService) {
+        MinDateValidatorService, MinLengthValidatorService, PastDateValidatorService, UpperLimitValidatorService) {
 
         var self = this;
 
@@ -96,13 +93,10 @@
             'lower-limit': LowerLimitValidatorService,
             'max-date': MaxDateValidatorService,
             'max-length': MaxLengthValidatorService,
-            'max-time': MaxTimeValidatorService,
             'min-date': MinDateValidatorService,
             'min-length': MinLengthValidatorService,
-            'min-time': MinTimeValidatorService,
             'past-date': PastDateValidatorService,
             'upper-limit': UpperLimitValidatorService,
-
         };
     }
 
@@ -122,6 +116,7 @@
         self.remove = remove;
         self.fetch = fetch;
         self.fetchAll = fetchAll;
+        self.initPool = initPool;
 
         initPool();
 
@@ -136,294 +131,25 @@
         function remove(idElementRegister) {
             self.pool.forEach(function(element, index, array) {
                 if (element.id === idElementRegister) {
-                    self.pool.remove(index);
+                    self.pool.splice(index, 1);
                 }
             });
         }
 
         function fetch(idElementRegister) {
+            var founded = {};
+
             self.pool.forEach(function(element, index, array) {
                 if (element.id === idElementRegister) {
-                    return element;
+                    founded = element;
                 }
             });
+
+            return founded;
         }
 
         function fetchAll() {
             return self.pool;
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otus.validation')
-        .service('DateInValidatorService', DateInValidatorService);
-
-    DateInValidatorService.$inject = ['ValidatorResponseFactory'];
-
-    function DateInValidatorService(ValidatorResponseFactory) {
-        var self = this;
-        self.execute = execute;
-
-        function execute(model, data) {
-            var result = (data.initial < model && model < data.end);
-            return ValidatorResponseFactory.create(model, data, result);
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otus.validation')
-        .service('DistinctValidatorService', DistinctValidatorService);
-
-    DistinctValidatorService.$inject = ['ValidatorResponseFactory'];
-
-    function DistinctValidatorService(ValidatorResponseFactory) {
-        var self = this;
-        self.execute = execute;
-
-        function execute(model, data) {
-            var result = (model != data.reference);
-            return ValidatorResponseFactory.create(model, data, result);
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otus.validation')
-        .service('FutureDateValidatorService', FutureDateValidatorService);
-
-    FutureDateValidatorService.$inject = ['ValidatorResponseFactory'];
-
-    function FutureDateValidatorService(ValidatorResponseFactory) {
-        var self = this;
-        self.execute = execute;
-
-        function execute(model, data) {
-            var result = (model > new Date());
-            return ValidatorResponseFactory.create(model, data, result);
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otus.validation')
-        .service('LowerLimitValidatorService', LowerLimitValidatorService);
-
-    LowerLimitValidatorService.$inject = ['ValidatorResponseFactory'];
-
-    function LowerLimitValidatorService(ValidatorResponseFactory) {
-        var self = this;
-        self.execute = execute;
-
-        function execute(model, data) {
-            var result = (model > data.reference);
-            return ValidatorResponseFactory.create(model, data, result);
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otus.validation')
-        .service('MandatoryValidatorService', MandatoryValidatorService);
-
-    MandatoryValidatorService.$inject = ['ValidatorResponseFactory'];
-
-    function MandatoryValidatorService(ValidatorResponseFactory) {
-        var self = this;
-        self.execute = execute;
-
-        function execute(model, data) {
-            var result = !(typeof model == 'undefined' || model.length == 0);
-            return ValidatorResponseFactory.create(model, data, result);
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otus.validation')
-        .service('MaxDateValidatorService', MaxDateValidatorService);
-
-    MaxDateValidatorService.$inject = ['ValidatorResponseFactory'];
-
-    function MaxDateValidatorService(ValidatorResponseFactory) {
-        var self = this;
-        self.execute = execute;
-
-        function execute(model, data) {
-            var result = (model <= data.reference);
-            return ValidatorResponseFactory.create(model, data, result);
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otus.validation')
-        .service('MaxLengthValidatorService', MaxLengthValidatorService);
-
-    MaxLengthValidatorService.$inject = ['ValidatorResponseFactory'];
-
-    function MaxLengthValidatorService(ValidatorResponseFactory) {
-        var self = this;
-        self.execute = execute;
-
-        function execute(model, data) {
-            var result = (model.length <= data.size);
-            return ValidatorResponseFactory.create(model, data, result);
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otus.validation')
-        .service('MaxTimeValidatorService', MaxTimeValidatorService);
-
-    MaxTimeValidatorService.$inject = ['ValidatorResponseFactory'];
-
-    function MaxTimeValidatorService(ValidatorResponseFactory) {
-        var self = this;
-        self.execute = execute;
-
-        function execute(model, data) {
-            // TODO Analisar retorno do tipo de componente para comparação 
-            return ValidatorResponseFactory.create(model, data, result);
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otus.validation')
-        .service('MinDateValidatorService', MinDateValidatorService);
-
-    MinDateValidatorService.$inject = ['ValidatorResponseFactory'];
-
-    function MinDateValidatorService(ValidatorResponseFactory) {
-        var self = this;
-        self.execute = execute;
-
-        function execute(model, data) {
-            var result = (model >= data.reference);
-            return ValidatorResponseFactory.create(model, data, result);
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otus.validation')
-        .service('MinLengthValidatorService', MinLengthValidatorService);
-
-    MinLengthValidatorService.$inject = ['ValidatorResponseFactory'];
-
-    function MinLengthValidatorService(ValidatorResponseFactory) {
-        var self = this;
-        self.execute = execute;
-
-        function execute(model, data) {
-            var result = (model.length >= data.size);
-            return ValidatorResponseFactory.create(model, data, result);
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otus.validation')
-        .service('MinTimeValidatorService', MinTimeValidatorService);
-
-    MinTimeValidatorService.$inject = ['ValidatorResponseFactory'];
-
-    function MinTimeValidatorService(ValidatorResponseFactory) {
-        var self = this;
-        self.execute = execute;
-
-        function execute(model, data) {
-            // TODO Analisar retorno do tipo de componente para comparação 
-            return ValidatorResponseFactory.create(model, data, result);
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otus.validation')
-        .service('PastDateValidatorService', PastDateValidatorService);
-
-    PastDateValidatorService.$inject = ['ValidatorResponseFactory'];
-
-    function PastDateValidatorService(ValidatorResponseFactory) {
-        var self = this;
-        self.execute = execute;
-
-        function execute(model, data) {
-            var result = (model < new Date());
-            return ValidatorResponseFactory.create(model, data, result);
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otus.validation')
-        .service('UpperLimitValidatorService', UpperLimitValidatorService);
-
-    UpperLimitValidatorService.$inject = ['ValidatorResponseFactory'];
-
-    function UpperLimitValidatorService(ValidatorResponseFactory) {
-        var self = this;
-        self.execute = execute;
-
-        function execute(model, data) {
-            var result = (model < data.reference);
-            return ValidatorResponseFactory.create(model, data, result);
         }
     }
 
@@ -463,7 +189,7 @@
         }
 
         function runAllValidators(callback) {
-	    var validationResponse = ValidationResponseFactory.create(self.id);
+            var validationResponse = ValidationResponseFactory.create(self.id);
 
             self.validators.forEach(function(element, index, array) {
                 validationResponse.addValidatorResponse(element.execute());
@@ -498,17 +224,248 @@
     function Validator(name, data, model, ValidationHubService) {
         var self = this;
         self.name = name;
-        self.status = true;
+        self.enable = true;
         self.data = data;
         self.execute = execute;
 
         function execute() {
-            if (self.status) {
+            if (self.enable) {
                 var validationResponse = ValidationHubService.validators[self.name].execute(model, self.data);
                 validationResponse.name = self.name;
 
                 return validationResponse;
             }
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otus.validation')
+        .service('DateInValidatorService', DateInValidatorService);
+
+    DateInValidatorService.$inject = ['ValidatorResponseFactory'];
+
+    function DateInValidatorService(ValidatorResponseFactory) {
+        var self = this;
+        self.execute = execute;
+
+        function execute(model, data) {
+            var result = (data.initial < model && model < data.end);
+            return ValidatorResponseFactory.create(model, data, result);
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otus.validation')
+        .service('FutureDateValidatorService', FutureDateValidatorService);
+
+    FutureDateValidatorService.$inject = ['ValidatorResponseFactory'];
+
+    function FutureDateValidatorService(ValidatorResponseFactory) {
+        var self = this;
+        self.execute = execute;
+
+        function execute(model, data) {
+            var result = (model > new Date());
+            return ValidatorResponseFactory.create(model, data, result);
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otus.validation')
+        .service('MaxDateValidatorService', MaxDateValidatorService);
+
+    MaxDateValidatorService.$inject = ['ValidatorResponseFactory'];
+
+    function MaxDateValidatorService(ValidatorResponseFactory) {
+        var self = this;
+        self.execute = execute;
+
+        function execute(model, data) {
+            var result = (model <= data.reference);
+            return ValidatorResponseFactory.create(model, data, result);
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otus.validation')
+        .service('MinDateValidatorService', MinDateValidatorService);
+
+    MinDateValidatorService.$inject = ['ValidatorResponseFactory'];
+
+    function MinDateValidatorService(ValidatorResponseFactory) {
+        var self = this;
+        self.execute = execute;
+
+        function execute(model, data) {
+            var result = (model >= data.reference);
+            return ValidatorResponseFactory.create(model, data, result);
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otus.validation')
+        .service('PastDateValidatorService', PastDateValidatorService);
+
+    PastDateValidatorService.$inject = ['ValidatorResponseFactory'];
+
+    function PastDateValidatorService(ValidatorResponseFactory) {
+        var self = this;
+        self.execute = execute;
+
+        function execute(model, data) {
+            var result = (model < new Date());
+            return ValidatorResponseFactory.create(model, data, result);
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otus.validation')
+        .service('DistinctValidatorService', DistinctValidatorService);
+
+    DistinctValidatorService.$inject = ['ValidatorResponseFactory'];
+
+    function DistinctValidatorService(ValidatorResponseFactory) {
+        var self = this;
+        self.execute = execute;
+
+        function execute(model, data) {
+            var result = (model != data.reference);
+            return ValidatorResponseFactory.create(model, data, result);
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otus.validation')
+        .service('MandatoryValidatorService', MandatoryValidatorService);
+
+    MandatoryValidatorService.$inject = ['ValidatorResponseFactory'];
+
+    function MandatoryValidatorService(ValidatorResponseFactory) {
+        var self = this;
+        self.execute = execute;
+
+        function execute(model, data) {
+            var result = !(typeof model == 'undefined' || model.length == 0);
+            return ValidatorResponseFactory.create(model, data, result);
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otus.validation')
+        .service('LowerLimitValidatorService', LowerLimitValidatorService);
+
+    LowerLimitValidatorService.$inject = ['ValidatorResponseFactory'];
+
+    function LowerLimitValidatorService(ValidatorResponseFactory) {
+        var self = this;
+        self.execute = execute;
+
+        function execute(model, data) {
+            var result = (model > data.reference);
+            return ValidatorResponseFactory.create(model, data, result);
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otus.validation')
+        .service('UpperLimitValidatorService', UpperLimitValidatorService);
+
+    UpperLimitValidatorService.$inject = ['ValidatorResponseFactory'];
+
+    function UpperLimitValidatorService(ValidatorResponseFactory) {
+        var self = this;
+        self.execute = execute;
+
+        function execute(model, data) {
+            var result = (model < data.reference);
+            return ValidatorResponseFactory.create(model, data, result);
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otus.validation')
+        .service('MaxLengthValidatorService', MaxLengthValidatorService);
+
+    MaxLengthValidatorService.$inject = ['ValidatorResponseFactory'];
+
+    function MaxLengthValidatorService(ValidatorResponseFactory) {
+        var self = this;
+        self.execute = execute;
+
+        function execute(model, data) {
+            var result = (model.length <= data.size);
+            return ValidatorResponseFactory.create(model, data, result);
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otus.validation')
+        .service('MinLengthValidatorService', MinLengthValidatorService);
+
+    MinLengthValidatorService.$inject = ['ValidatorResponseFactory'];
+
+    function MinLengthValidatorService(ValidatorResponseFactory) {
+        var self = this;
+        self.execute = execute;
+
+        function execute(model, data) {
+            var result = (model.length >= data.size);
+            return ValidatorResponseFactory.create(model, data, result);
         }
     }
 
@@ -535,11 +492,11 @@
     function ValidationResponse(elementID) {
         var self = this;
         self.elementID = elementID;
-        self.validatorsReponse = [];
+        self.validatorsResponse = [];
         self.addValidatorResponse = addValidatorResponse;
 
         function addValidatorResponse(reponse) {
-            self.validatorsReponse.push(reponse);
+            self.validatorsResponse.push(reponse);
         }
     }
 
