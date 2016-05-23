@@ -17,6 +17,27 @@ Esse projeto tem como intuito fornecer uma ferramenta pra realizar validação d
 
 ```
 
+### Response de Vadalição
+
+```json
+{
+    "elementID": "IDE",
+    "validators": [{
+        "name": "nome do validator",
+        "reference": "valor utilizado para referencia",
+        "result": "true/false"
+    }, {
+        "name": "nome do validator",
+        "reference": "valor utilizado para referencia",
+        "result": "true/false"
+    }, {
+        "name": "nome do validator",
+        "reference": "valor utilizado para referencia",
+        "result": "true/false"
+    }]
+}
+```
+
 ## Validadores Disponiveis
 
 * Name: Mandatory
