@@ -22,7 +22,6 @@ describe('ValidationHubService', function() {
 
     it('should must have all available validatores', function() {
         expect(service.validators['mandatory']).not.toBeUndefined();
-        expect(service.validators['in']).not.toBeUndefined();
         expect(service.validators['distinct']).not.toBeUndefined();
         expect(service.validators['future-date']).not.toBeUndefined();
         expect(service.validators['date-in']).not.toBeUndefined();

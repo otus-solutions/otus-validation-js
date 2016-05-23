@@ -18,7 +18,6 @@
 
         self.validators = {
             'mandatory': MandatoryValidatorService,
-            'in': MandatoryValidatorService,
             'distinct': DistinctValidatorService,
             'future-date': FutureDateValidatorService,
             'date-in': DateInValidatorService,
