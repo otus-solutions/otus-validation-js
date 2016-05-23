@@ -2,7 +2,28 @@
 
 Esse projeto tem como intuito fornecer uma ferramenta pra realizar validação de campos.
 
-### Aplicação
+### Dependência
+
+Módulo:
+```javascript
+(function() {
+
+    angular
+        .module('PROJETO', [
+            'otus.validation'
+        ]);
+
+}());
+```
+
+Package.json:
+```json
+    "dependencies": {
+        "otus-validation-js": "git@github.com:ccem-dev/otus-validation-js.git#dev"
+    }
+```
+
+### Utilização
 
 ```javascript
                 var elementRegister = ElementRegisterFactory.create('IDENTIFICADOR', model);
