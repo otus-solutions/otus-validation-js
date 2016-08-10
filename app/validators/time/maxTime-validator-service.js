@@ -12,11 +12,11 @@
         self.execute = execute;
 
         function execute(model, data) {
-          //Hora máxima esperada.
+            //Hora máxima esperada.
 
-          // self.reference = '';
-          // var result = ();
-          // return ValidatorResponseFactory.create(model, data, result);
+            // self.reference = '';
+            // var result = ();
+            // return ValidatorResponseFactory.create(model, data, result);
         }
     }
 
