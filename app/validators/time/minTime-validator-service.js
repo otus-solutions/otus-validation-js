@@ -14,6 +14,8 @@
         function execute(model, data) {
             //Hora mínima esperada.
 
+            // var result = ();
+            // return ValidatorResponseFactory.create(model, data, result);
         }
     }
 }());

@@ -15,6 +15,7 @@
           //Verificar se o valor esta dentro de um lista de valores referencia.
             var result = (data.initial < model && model < data.end);
             return ValidatorResponseFactory.create(model, data, result);
+
         }
     }
 

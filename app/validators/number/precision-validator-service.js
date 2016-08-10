@@ -12,9 +12,11 @@
         self.execute = execute;
 
         function execute(model, data) {
-          //	Quantidade total de dígitos do número. Somente Integer
-          // var result = ();
-          // return ValidatorResponseFactory.create(model, data result);
+          //	Quantidade total de dígitos do número. Questão Integer.
+
+          var result = (model == data.reference);
+          return ValidatorResponseFactory.create(model, data result);
+
         }
     }
 

@@ -13,6 +13,10 @@
 
         function execute(model, data) {
             //Quantidade de casas decimais do número
+
+            var result = (model == data.reference);
+            return ValidatorResponseFactory.create(model, data, result);
+
         }
     }
 
