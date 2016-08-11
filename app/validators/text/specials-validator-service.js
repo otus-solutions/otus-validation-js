@@ -12,6 +12,7 @@
         self.execute = execute;
 
         function execute(model, data) {
+            //Indica que permite caracteres especiais no texto. Ex: %$&@
             //switch
 
         }

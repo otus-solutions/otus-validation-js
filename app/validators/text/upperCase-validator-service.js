@@ -13,9 +13,8 @@
 
         function execute(model, data) {
             //Indica que permite texto em maiúsculo.
-            //switch
 
-            var result = (model == data.toUpperCase());
+            var result = (model == data.reference.toUpperCase());
             return ValidatorResponseFactory.create(model, data, result);
 
         }

@@ -15,7 +15,16 @@ describe('ValidationHubService', function() {
                 'MinDateValidatorService': _$injector_.get('MinDateValidatorService'),
                 'MinLengthValidatorService': _$injector_.get('MinLengthValidatorService'),
                 'PastDateValidatorService': _$injector_.get('PastDateValidatorService'),
-                'UpperLimitValidatorService': _$injector_.get('UpperLimitValidatorService')
+                'UpperLimitValidatorService': _$injector_.get('UpperLimitValidatorService'),
+                'InValidatorService': _$injector_.get('InValidatorService'),
+                'PrecisionValidatorService': _$injector_.get('PrecisionValidatorService'),
+                'scale': _$injector_.get('ScaleValidatorService'),
+                'alphanumeric': _$injector_.get('AlphanumericValidatorService'),
+                'lowerCase': _$injector_.get('LowerCaseValidatorService'),
+                'specials': _$injector_.get('SpecialsValidatorService'),
+                'upperCase': _$injector_.get('UpperCaseValidatorService'),
+                'maxTime': _$injector_.get('MaxTimeValidatorService'),
+                'minTime': _$injector_.get('MinTimeValidatorService'),
             });
         });
     });
@@ -32,6 +41,15 @@ describe('ValidationHubService', function() {
         expect(service.validators['min-length']).not.toBeUndefined();
         expect(service.validators['past-date']).not.toBeUndefined();
         expect(service.validators['upper-limit']).not.toBeUndefined();
+        expect(service.validators['in']).not.toBeUndefined();
+        expect(service.validators['precision']).not.toBeUndefined();
+        expect(service.validators['scale']).not.toBeUndefined();
+        expect(service.validators['alphanumeric']).not.toBeUndefined();
+        expect(service.validators['lowerCase']).not.toBeUndefined();
+        expect(service.validators['specials']).not.toBeUndefined();
+        expect(service.validators['upperCase']).not.toBeUndefined();
+        expect(service.validators['maxTime']).not.toBeUndefined();
+        expect(service.validators['minTime']).not.toBeUndefined();
     });
 
 

@@ -14,7 +14,15 @@
         function execute(model, data) {
             //Quantidade de casas decimais do número
 
-            var result = (model == data.reference);
+            var result = data.reference.toString();
+            var comma = result.split('.');
+
+            if (comma[1].length === model) {
+                return true;
+            } else {
+                return false;
+            }
+
             return ValidatorResponseFactory.create(model, data, result);
 
         }
