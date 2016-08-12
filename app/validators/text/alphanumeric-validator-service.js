@@ -13,8 +13,8 @@
 
         function execute(model, data) {
             var code, i, len;
-            //Indica que permite caracteres alfanuméricos.
-            //switch
+            //Indica que permite digitar caracteres alfanuméricos.
+
             if (data.reference == true) {
                 for (i = 0, len = str.length; i < len; i++) {
                     code = str.charCodeAt(i);
@@ -29,9 +29,7 @@
             } else {
 
             }
-
             return ValidatorResponseFactory.create(model, data, result);
         }
     }
-
 }());
