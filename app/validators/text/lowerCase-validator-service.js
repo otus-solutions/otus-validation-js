@@ -14,9 +14,12 @@
         function execute(model, data) {
             //Indica que permite texto em minúsculo.
 
-            var result = (model == data.reference.toLowerCase());
+            if(data.reference == true) {
+                return model.toLowerCase();
+            } else {
+                return model.toString();
+            }
             return ValidatorResponseFactory.create(model, data, result);
-
         }
     }
 

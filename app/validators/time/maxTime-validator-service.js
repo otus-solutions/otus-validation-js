@@ -12,11 +12,8 @@
         self.execute = execute;
 
         function execute(model, data) {
-            //Hora máxima esperada.
-
-            // self.reference = '';
-            // var result = ();
-            // return ValidatorResponseFactory.create(model, data, result);
+            var result = (model <= data.reference);
+            return ValidatorResponseFactory.create(model, data, result);
         }
     }
 
