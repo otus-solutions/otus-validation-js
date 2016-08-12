@@ -8,14 +8,39 @@ describe('LowerCaseValidatorService', function() {
         });
     });
 
-    it('should be return string to lowerCase', function() {
-        var string = 'ABC';
-        var stringupper = 'aBc';
-        //
-        // console.log(string.toLowerCase());
-        // console.log(stringupper.toUpperCase());
+    it('should return response in lowerCase when data.reference is true', function() {
+        var model = 'TESTE';
 
+        var data = {
+          'reference': true
+        }
 
+        var response = service.execute(model, data);
+        expect(response).toEqual("teste");
+
+    });
+
+    it('should return response in lowerCase when data.reference is true teste 2', function() {
+        var model = 'TESte';
+
+        var data = {
+          'reference': true
+        }
+
+        var response = service.execute(model, data);
+        expect(response).toEqual("teste");
+
+    });
+
+    it('should return response not in lowerCase when data.reference is false', function() {
+        var model = 'TESTE';
+
+        var data = {
+          'reference': false
+        }
+
+        var response = service.execute(model, data);
+        expect(response).toEqual("TESTE");
     });
 
 });
