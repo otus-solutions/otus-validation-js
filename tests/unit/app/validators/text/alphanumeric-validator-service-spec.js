@@ -8,5 +8,7 @@ describe('AlphanumericValidatorService', function() {
         });
     });
 
-    // it
+    it('should be validate string alphanumeric if data.reference is true', function() {
+      
+    });
 });

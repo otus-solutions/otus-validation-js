@@ -26,8 +26,9 @@
                     return true;
                 }
 
-            } else {
-
+                //permitir que o usuário digite apenas aquelas letras
+            } else { //se data.reference for false
+              //permitir que o usuário digite todas as letras
             }
             return ValidatorResponseFactory.create(model, data, result);
         }
