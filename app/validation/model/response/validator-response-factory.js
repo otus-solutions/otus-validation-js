@@ -8,6 +8,8 @@
     function ValidatorResponseFactory() {
         var self = this;
         self.create = create;
+        self.isValidSpecials = isValidSpecials;
+        self.isValidAlphanumeric = isValidAlphanumeric;
 
         function create(reference, data, result) {
             return new ValidatorResponse(reference, data, result);
@@ -22,6 +24,15 @@
         self.reference = reference;
         self.data = data;
         self.result = result;
+    }
+
+    function isValidAlphanumeric(str) {
+        return !/[^a-zA-Z0-9_]/g.test(str);
+    }
+
+    function isValidSpecials(str) {
+        return !/[^@!#$%¨&*+=()_}{^`´-]/g.test(str);
+
     }
 
 }());
