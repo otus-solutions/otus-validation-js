@@ -12,9 +12,8 @@
         self.execute = execute;
 
         function execute(model, data) {
-            //	Quantidade total de dígitos do número. Questão Integer.
-
             var result = data.reference.toString();
+            
             if (result.length === model) {
                 return true;
             } else {

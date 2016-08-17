@@ -12,11 +12,12 @@
         self.execute = execute;
 
         function execute(model, data) {
-            //Indica que permite texto em maiúsculo.
+            var result;
+
             if (data.reference == true) {
-                return model.toUpperCase();
+                return result = model.toUpperCase();
             } else {
-                return model.toString();
+                return result = model.toString();
             }
             return ValidatorResponseFactory.create(model, data, result);
         }

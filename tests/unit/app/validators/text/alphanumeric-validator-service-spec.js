@@ -9,7 +9,7 @@ describe('AlphanumericValidatorService', function() {
     });
 
     it('should be validate string alphanumeric if data.reference is true', function() {
-        var model = 'Teste124';
+        var model = 'Tes te124 ';
 
         var data = {
             'reference': true

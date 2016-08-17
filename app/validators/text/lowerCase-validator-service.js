@@ -12,12 +12,12 @@
         self.execute = execute;
 
         function execute(model, data) {
-            //Indica que permite texto em minúsculo.
+            var result;
 
             if(data.reference == true) {
-                return model.toLowerCase();
+                return result = model.toLowerCase();
             } else {
-                return model.toString();
+                return result = model.toString();
             }
             return ValidatorResponseFactory.create(model, data, result);
         }

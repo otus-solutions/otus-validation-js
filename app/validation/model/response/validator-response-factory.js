@@ -27,11 +27,11 @@
     }
 
     function isValidAlphanumeric(str) {
-        return !/[^a-zA-Z0-9_]/g.test(str);
+        return !/[^a-zA-Z0-9 ]/g.test(str);
     }
 
     function isValidSpecials(str) {
-        return !/[^@!#$%¨&*+=()_}{^`´-]/g.test(str);
+        return !/[^@!#$%¨&*+=()_}{^`´ ]/g.test(str);
 
     }
 

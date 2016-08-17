@@ -12,8 +12,6 @@
         self.execute = execute;
 
         function execute(model, data) {
-            //Quantidade de casas decimais do número
-
             var result = data.reference.toString();
             var comma = result.split('.');
 

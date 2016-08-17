@@ -9,7 +9,7 @@ describe('SpecialsValidatorService', function() {
     });
 
     it('should be validate string alphanumeric if data.reference is true', function() {
-        var model = '$@#';
+        var model = '@ $%¨ $%';
 
         var data = {
             'reference': true

@@ -13,8 +13,6 @@
 
         function execute(model, data) {
             var result;
-            //Indica que permite digitar caracteres especiais no texto se true. Ex: %$&@
-            //valida o campo digitado, se contem caracteres especiais
 
             if (data.reference == true) {
                 return result = ValidatorResponseFactory.isValidSpecials(model);
