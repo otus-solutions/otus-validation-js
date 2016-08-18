@@ -27,7 +27,7 @@ Package.json:
 
 ```javascript
                 var elementRegister = ElementRegisterFactory.create('IDENTIFICADOR', model);
-                
+
                 elementRegister.addValidator('upper-limit', {'reference': 10});
                 elementRegister.addValidator('distinct', {'reference': 10});
 
@@ -76,6 +76,13 @@ Package.json:
 ```javascript
                 elementRegister.addValidator('distinct', {'reference' : 10});
 ```
+* Name: In
+* Tipo: Number
+* Value: in
+* Aplicação:
+```javascript
+                elementRegister.addValidator('in', {'initial' : 1, 'end' : 10});
+```
 
 * Name: Lower Limit
 * Tipo: Integer
@@ -91,6 +98,22 @@ Package.json:
 * Aplicação:
 ```javascript
                 elementRegister.addValidator('upper-limit', {'reference' : 100});
+```
+
+* Name: Precision
+* Tipo: Integer
+* Value: precision
+* Aplicação:
+```javascript
+                elementRegister.addValidator('precision', {'reference' : 3});
+```
+
+* Name: Scale
+* Tipo: Integer
+* Value: scale
+* Aplicação:
+```javascript
+                elementRegister.addValidator('scale', {'reference' : 2});
 ```
 
 * Name: Date In
@@ -149,6 +172,50 @@ Package.json:
                 elementRegister.addValidator('max-length', {'size' : 150});
 ```
 
+* Name: Alphanumeric
+* Tipo: String
+* Value: alphanumeric
+* Aplicação:
+```javascript
+                elementRegister.addValidator('alphanumeric', {});
+```
 
+* Name: Lower Case
+* Tipo: String
+* Value: lower-Case
+* Aplicação:
+```javascript
+                elementRegister.addValidator('lower-case', {});
+```
 
+* Name: Specials
+* Tipo: String
+* Value: Specials
+* Aplicação:
+```javascript
+                elementRegister.addValidator('specials', {});
+```
 
+* Name: Upper Case
+* Tipo: String
+* Value: upper-case
+* Aplicação:
+```javascript
+                elementRegister.addValidator('upper-case', {});
+```
+
+* Name: Max Time
+* Tipo: Time
+* Value: max-time
+* Aplicação:
+```javascript
+                elementRegister.addValidator('max-time', {'reference' : '22:00'});
+```
+
+* Name: Min Time
+* Tipo: Time
+* Value: min-time
+* Aplicação:
+```javascript
+                elementRegister.addValidator('min-time', {'reference' : '06:00'});
+```
