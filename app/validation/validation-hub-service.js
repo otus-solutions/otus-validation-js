@@ -24,7 +24,7 @@
             'mandatory': MandatoryValidatorService,
             'distinct': DistinctValidatorService,
             'future-date': FutureDateValidatorService,
-            'date-in': DateInValidatorService,
+            'range-date': DateInValidatorService,
             'lower-limit': LowerLimitValidatorService,
             'max-date': MaxDateValidatorService,
             'max-length': MaxLengthValidatorService,
