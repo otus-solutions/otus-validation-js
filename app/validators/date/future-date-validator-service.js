@@ -12,7 +12,11 @@
         self.execute = execute;
 
         function execute(model, data) {
-            var result = (model > new Date());
+            if (data.reference == true) {
+                var result = (model > new Date());
+            } else {
+                return;
+            }
             return ValidatorResponseFactory.create(model, data, result);
         }
     }
