@@ -15,9 +15,9 @@
             var result;
 
             if (data.reference == true) {
-                return result = ValidatorResponseFactory.isValidSpecials(model);
+                result = ValidatorResponseFactory.isValidSpecials(model);
             } else {
-                return result = model.toString();
+                result = model.toString();
             }
             return ValidatorResponseFactory.create(model, data, result);
         }

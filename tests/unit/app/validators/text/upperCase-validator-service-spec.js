@@ -16,7 +16,7 @@ describe('UpperCaseValidatorService', function() {
         }
 
         var response = service.execute(model, data);
-        expect(response).toEqual("TESTE");
+        expect(response.result).toEqual("TESTE");
     });
 
     it('should return response in upperCase when data.reference is true test 2', function() {
@@ -27,7 +27,7 @@ describe('UpperCaseValidatorService', function() {
         }
 
         var response = service.execute(model, data);
-        expect(response).toEqual("TESTE");
+        expect(response.result).toEqual("TESTE");
     });
 
     it('should return response not upperCase when data.reference is false', function() {
@@ -38,6 +38,6 @@ describe('UpperCaseValidatorService', function() {
         }
 
         var response = service.execute(model, data);
-        expect(response).toEqual("teste");
+        expect(response.result).toEqual("teste");
     });
 });

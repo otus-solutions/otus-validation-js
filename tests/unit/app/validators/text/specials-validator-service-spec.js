@@ -16,7 +16,7 @@ describe('SpecialsValidatorService', function() {
         };
 
         var response = service.execute(model, data);
-        expect(response).toEqual(true);
+        expect(response.result).toEqual(true);
     });
 
     it('should be validate string alphanumeric if data.reference is true', function() {
@@ -27,7 +27,7 @@ describe('SpecialsValidatorService', function() {
         };
 
         var response = service.execute(model, data);
-        expect(response).toEqual(false);
+        expect(response.result).toEqual(false);
     });
 
     it('should be valid string alphanumeric if data.reference is false', function() {
@@ -38,6 +38,6 @@ describe('SpecialsValidatorService', function() {
         };
 
         var response = service.execute(model, data);
-        expect(response).toEqual('Teste124@#');
+        expect(response.result).toEqual('Teste124@#');
     });
 });

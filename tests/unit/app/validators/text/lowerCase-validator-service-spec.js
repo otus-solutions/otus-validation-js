@@ -16,7 +16,7 @@ describe('LowerCaseValidatorService', function() {
         }
 
         var response = service.execute(model, data);
-        expect(response).toEqual("teste");
+        expect(response.result).toEqual("teste");
 
     });
 
@@ -28,7 +28,7 @@ describe('LowerCaseValidatorService', function() {
         }
 
         var response = service.execute(model, data);
-        expect(response).toEqual("teste");
+        expect(response.result).toEqual("teste");
 
     });
 
@@ -40,7 +40,7 @@ describe('LowerCaseValidatorService', function() {
         }
 
         var response = service.execute(model, data);
-        expect(response).toEqual("TESTE");
+        expect(response.result).toEqual("TESTE");
     });
 
 });
