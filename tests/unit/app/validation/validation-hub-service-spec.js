@@ -32,15 +32,15 @@ describe('ValidationHubService', function() {
     it('should must have all available validatores', function() {
         expect(service.validators['mandatory']).not.toBeUndefined();
         expect(service.validators['distinct']).not.toBeUndefined();
-        expect(service.validators['future-date']).not.toBeUndefined();
-        expect(service.validators['date-in']).not.toBeUndefined();
-        expect(service.validators['lower-limit']).not.toBeUndefined();
-        expect(service.validators['max-date']).not.toBeUndefined();
-        expect(service.validators['max-length']).not.toBeUndefined();
-        expect(service.validators['min-date']).not.toBeUndefined();
-        expect(service.validators['min-length']).not.toBeUndefined();
-        expect(service.validators['past-date']).not.toBeUndefined();
-        expect(service.validators['upper-limit']).not.toBeUndefined();
+        expect(service.validators['futureDate']).not.toBeUndefined();
+        expect(service.validators['rangeDate']).not.toBeUndefined();
+        expect(service.validators['lowerLimit']).not.toBeUndefined();
+        expect(service.validators['maxDate']).not.toBeUndefined();
+        expect(service.validators['maxLength']).not.toBeUndefined();
+        expect(service.validators['minDate']).not.toBeUndefined();
+        expect(service.validators['minLength']).not.toBeUndefined();
+        expect(service.validators['pastDate']).not.toBeUndefined();
+        expect(service.validators['upperLimit']).not.toBeUndefined();
         expect(service.validators['in']).not.toBeUndefined();
         expect(service.validators['precision']).not.toBeUndefined();
         expect(service.validators['scale']).not.toBeUndefined();

@@ -76,7 +76,7 @@ describe('ValidationService', function() {
         var elementID = 'ID';
         var model = 5;
         var elementRegister = ElementRegisterFactory.create(elementID, model);
-        elementRegister.addValidator('upper-limit', {
+        elementRegister.addValidator('upperLimit', {
             'reference': 10
         });
 
@@ -84,7 +84,7 @@ describe('ValidationService', function() {
 
         service.validateElement(elementID, function(responseValidation) {
             expect(responseValidation[0].elementID).toEqual(elementID);
-            expect(responseValidation[0].validatorsResponse[0].name).toEqual('upper-limit');
+            expect(responseValidation[0].validatorsResponse[0].name).toEqual('upperLimit');
             expect(responseValidation[0].validatorsResponse[0].data.reference).toEqual(10);
             expect(responseValidation.length).toEqual(1);
         });
@@ -96,7 +96,7 @@ describe('ValidationService', function() {
         var model = 5;
 
         var elementRegister = ElementRegisterFactory.create(elementID, model);
-        elementRegister.addValidator('upper-limit', {
+        elementRegister.addValidator('upperLimit', {
             'reference': 10
         });
 
@@ -110,7 +110,7 @@ describe('ValidationService', function() {
 
         service.validateAllElements(function(responseValidation) {
             expect(responseValidation[0].elementID).toEqual(elementID);
-            expect(responseValidation[0].validatorsResponse[0].name).toEqual('upper-limit');
+            expect(responseValidation[0].validatorsResponse[0].name).toEqual('upperLimit');
             expect(responseValidation[0].validatorsResponse[0].data.reference).toEqual(10);
 
             expect(responseValidation[1].elementID).toEqual(elementIDTwo);
