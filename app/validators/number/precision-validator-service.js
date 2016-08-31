@@ -13,11 +13,11 @@
 
         function execute(model, data) {
             var result = data.reference.toString();
-            
+
             if (result.length === model) {
-                return true;
+                result = true;
             } else {
-                return false;
+                result = false;
             }
             return ValidatorResponseFactory.create(model, data, result);
 

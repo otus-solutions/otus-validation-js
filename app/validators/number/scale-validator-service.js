@@ -14,11 +14,10 @@
         function execute(model, data) {
             var result = data.reference.toString();
             var comma = result.split('.');
-
-            if (comma[1].length === model) {
-                return true;
+            if (comma[1] && comma[1].length === model) {
+                result = true;
             } else {
-                return false;
+                result = false;
             }
 
             return ValidatorResponseFactory.create(model, data, result);

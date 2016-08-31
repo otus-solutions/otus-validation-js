@@ -13,10 +13,10 @@ describe('ScaleValidatorService', function() {
         var model = 2;
         var data = {
             'reference': 123.56
-        }
+        };
 
         var response = service.execute(model, data);
-        expect(response).toBe(true);
+        expect(response.result).toBe(true);
     });
 
 });

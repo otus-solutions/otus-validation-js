@@ -13,10 +13,10 @@ describe('PrecisionValidatorService', function() {
         var model = 5;
         var data = {
             'reference': 12356
-        }
+        };
 
         var response = service.execute(model, data);
-        expect(response).toBe(true);
+        expect(response.result).toBe(true);
     });
 
 });
