@@ -15,7 +15,7 @@
             var result;
 
             if (data.reference == true) {
-                result = model.toUpperCase();
+                result = model.toString().toUpperCase();
             } else {
                 result = model.toString();
             }

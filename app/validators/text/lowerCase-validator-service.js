@@ -15,7 +15,7 @@
             var result;
 
             if (data.reference == true) {
-                result = model.toLowerCase();
+                result = model.toString().toLowerCase();
             } else {
                 result = model.toString();
             }
