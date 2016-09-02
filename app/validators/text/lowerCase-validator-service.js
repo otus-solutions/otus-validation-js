@@ -14,7 +14,7 @@
         function execute(model, data) {
             var result;
 
-            if (data.reference == true) {
+            if (data.reference) {
                 result = model.toString().toLowerCase();
             } else {
                 result = model.toString();

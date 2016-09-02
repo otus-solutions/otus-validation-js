@@ -12,7 +12,7 @@
         self.execute = execute;
 
         function execute(model, data) {
-            var result = !(typeof model == 'undefined' || model.length == 0);
+            var result = !(typeof model == 'undefined' || model.length === 0);
             return ValidatorResponseFactory.create(model, data, result);
         }
     }

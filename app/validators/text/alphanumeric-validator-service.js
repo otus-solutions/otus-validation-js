@@ -14,7 +14,7 @@
         function execute(model, data) {
             var result;
 
-            if (data.reference == true) {
+            if (data.reference === true) {
                 result = ValidatorResponseFactory.isValidAlphanumeric(model);
             } else {
                 result = model.toString();

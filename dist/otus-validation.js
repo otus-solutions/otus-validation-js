@@ -197,12 +197,13 @@
 
         function addValidator(name, data) {
             var validator = ValidatorFactory.create(name, data, self.model);
+            console.log(self.model);
             self.validators.push(validator);
         }
 
         function runAllValidators(callback) {
             var validationResponse = ValidationResponseFactory.create(self.id);
-
+            console.log(self.model);
             self.validators.forEach(function(element, index, array) {
                 validationResponse.addValidatorResponse(element.execute());
             });
@@ -243,12 +244,53 @@
         function execute() {
             if (self.enable) {
                 var validationResponse = ValidationHubService.validators[self.name].execute(model, self.data);
-                console.log(self.name);
-                console.log(validationResponse);
                 validationResponse.name = self.name;
 
                 return validationResponse;
             }
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otus.validation')
+        .service('DistinctValidatorService', DistinctValidatorService);
+
+    DistinctValidatorService.$inject = ['ValidatorResponseFactory'];
+
+    function DistinctValidatorService(ValidatorResponseFactory) {
+        var self = this;
+        self.execute = execute;
+
+        function execute(model, data) {
+            var result = (model != data.reference);
+            return ValidatorResponseFactory.create(model, data, result);
+
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otus.validation')
+        .service('MandatoryValidatorService', MandatoryValidatorService);
+
+    MandatoryValidatorService.$inject = ['ValidatorResponseFactory'];
+
+    function MandatoryValidatorService(ValidatorResponseFactory) {
+        var self = this;
+        self.execute = execute;
+
+        function execute(model, data) {
+            var result = !(typeof model == 'undefined' || model.length === 0);
+            return ValidatorResponseFactory.create(model, data, result);
         }
     }
 
@@ -454,10 +496,10 @@
         function execute(model, data) {
             var result = data.reference.toString();
             var comma = result.split('.');
-            if (comma[1].length === model) {
-                return true;
+            if (comma[1] && comma[1].length === model) {
+                result = true;
             } else {
-                return false;
+                result = false;
             }
 
             return ValidatorResponseFactory.create(model, data, result);
@@ -493,49 +535,6 @@
 
     angular
         .module('otus.validation')
-        .service('DistinctValidatorService', DistinctValidatorService);
-
-    DistinctValidatorService.$inject = ['ValidatorResponseFactory'];
-
-    function DistinctValidatorService(ValidatorResponseFactory) {
-        var self = this;
-        self.execute = execute;
-
-        function execute(model, data) {
-            var result = (model != data.reference);
-            return ValidatorResponseFactory.create(model, data, result);
-
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otus.validation')
-        .service('MandatoryValidatorService', MandatoryValidatorService);
-
-    MandatoryValidatorService.$inject = ['ValidatorResponseFactory'];
-
-    function MandatoryValidatorService(ValidatorResponseFactory) {
-        var self = this;
-        self.execute = execute;
-
-        function execute(model, data) {
-            var result = !(typeof model == 'undefined' || model.length == 0);
-            return ValidatorResponseFactory.create(model, data, result);
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otus.validation')
         .service('AlphanumericValidatorService', AlphanumericValidatorService);
 
     AlphanumericValidatorService.$inject = ['ValidatorResponseFactory'];
@@ -547,10 +546,10 @@
         function execute(model, data) {
             var result;
 
-            if (data.reference == true) {
-                return result = ValidatorResponseFactory.isValidAlphanumeric(model);
+            if (data.reference === true) {
+                result = ValidatorResponseFactory.isValidAlphanumeric(model);
             } else {
-                return result = model.toString();
+                result = model.toString();
             }
             return ValidatorResponseFactory.create(model, data, result);
         }
@@ -573,10 +572,10 @@
         function execute(model, data) {
             var result;
 
-            if(data.reference == true) {
-                return result = model.toLowerCase();
+            if (data.reference) {
+                result = model.toString().toLowerCase();
             } else {
-                return result = model.toString();
+                result = model.toString();
             }
             return ValidatorResponseFactory.create(model, data, result);
         }
@@ -643,9 +642,9 @@
             var result;
 
             if (data.reference == true) {
-                return result = ValidatorResponseFactory.isValidSpecials(model);
+                result = ValidatorResponseFactory.isValidSpecials(model);
             } else {
-                return result = model.toString();
+                result = model.toString();
             }
             return ValidatorResponseFactory.create(model, data, result);
         }
@@ -669,9 +668,9 @@
             var result;
 
             if (data.reference == true) {
-                return result = model.toUpperCase();
+                result = model.toString().toUpperCase();
             } else {
-                return result = model.toString();
+                result = model.toString();
             }
             return ValidatorResponseFactory.create(model, data, result);
         }
