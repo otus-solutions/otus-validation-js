@@ -11,9 +11,10 @@
         var self = this;
         self.execute = execute;
 
-        function execute(model, data) {
-            var result = (data.initial < model && model < data.end);
-            return ValidatorResponseFactory.create(model, data, result);
+        function execute(answer, reference) {
+            var formatedAnswer = new Date(answer.data).toLocaleDateString();
+            var result = (new Date(reference.initial).toLocaleDateString() < formatedAnswer && formatedAnswer < new Date(reference.end).toLocaleDateString());
+            return ValidatorResponseFactory.create(answer, reference, result);
         }
     }
 

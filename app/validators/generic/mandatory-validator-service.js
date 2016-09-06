@@ -11,9 +11,11 @@
         var self = this;
         self.execute = execute;
 
-        function execute(model, data) {
-            var result = !(typeof model == 'undefined' || model.length === 0);
-            return ValidatorResponseFactory.create(model, data, result);
+        function execute(answer, data) {
+            console.log('mandatory');
+            console.log(answer);
+            var result = (angular.equals({}, answer)) ? true : false;
+            return ValidatorResponseFactory.create(answer, data, result);
         }
     }
 

@@ -197,13 +197,11 @@
 
         function addValidator(name, data) {
             var validator = ValidatorFactory.create(name, data, self.model);
-            console.log(self.model);
             self.validators.push(validator);
         }
 
         function runAllValidators(callback) {
             var validationResponse = ValidationResponseFactory.create(self.id);
-            console.log(self.model);
             self.validators.forEach(function(element, index, array) {
                 validationResponse.addValidatorResponse(element.execute());
             });
@@ -227,14 +225,14 @@
         var self = this;
         self.create = create;
 
-        function create(name, data, model) {
-            return new Validator(name, data, model, ValidationHubService);
+        function create(name, data, answer) {
+            return new Validator(name, data, answer, ValidationHubService);
         }
 
         return self;
     }
 
-    function Validator(name, data, model, ValidationHubService) {
+    function Validator(name, data, answer, ValidationHubService) {
         var self = this;
         self.name = name;
         self.enable = true;
@@ -243,54 +241,11 @@
 
         function execute() {
             if (self.enable) {
-                var validationResponse = ValidationHubService.validators[self.name].execute(model, self.data);
+                var validationResponse = ValidationHubService.validators[self.name].execute(answer, self.data);
                 validationResponse.name = self.name;
 
                 return validationResponse;
             }
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otus.validation')
-        .service('DistinctValidatorService', DistinctValidatorService);
-
-    DistinctValidatorService.$inject = ['ValidatorResponseFactory'];
-
-    function DistinctValidatorService(ValidatorResponseFactory) {
-        var self = this;
-        self.execute = execute;
-
-        function execute(model, data) {
-            var result = (model != data.reference);
-            return ValidatorResponseFactory.create(model, data, result);
-
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otus.validation')
-        .service('MandatoryValidatorService', MandatoryValidatorService);
-
-    MandatoryValidatorService.$inject = ['ValidatorResponseFactory'];
-
-    function MandatoryValidatorService(ValidatorResponseFactory) {
-        var self = this;
-        self.execute = execute;
-
-        function execute(model, data) {
-            var result = !(typeof model == 'undefined' || model.length === 0);
-            return ValidatorResponseFactory.create(model, data, result);
         }
     }
 
@@ -309,9 +264,10 @@
         var self = this;
         self.execute = execute;
 
-        function execute(model, data) {
-            var result = (data.initial < model && model < data.end);
-            return ValidatorResponseFactory.create(model, data, result);
+        function execute(answer, reference) {
+            var formatedAnswer = new Date(answer.data).toLocaleDateString();
+            var result = (new Date(reference.initial).toLocaleDateString() < formatedAnswer && formatedAnswer < new Date(reference.end).toLocaleDateString());
+            return ValidatorResponseFactory.create(answer, reference, result);
         }
     }
 
@@ -331,8 +287,9 @@
         self.execute = execute;
 
         function execute(model, data) {
-            if (data.reference == true) {
-                var result = (model > new Date());
+            var result;
+            if (data.reference === true) {
+                result = (model > new Date());
             } else {
                 return;
             }
@@ -356,7 +313,7 @@
         self.execute = execute;
 
         function execute(model, data) {
-            var result = (model <= data.reference);
+            var result = (model <= new Date(data.reference));
             return ValidatorResponseFactory.create(model, data, result);
         }
     }
@@ -404,6 +361,51 @@
                 return;
             }
             return ValidatorResponseFactory.create(model, data, result);
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otus.validation')
+        .service('DistinctValidatorService', DistinctValidatorService);
+
+    DistinctValidatorService.$inject = ['ValidatorResponseFactory'];
+
+    function DistinctValidatorService(ValidatorResponseFactory) {
+        var self = this;
+        self.execute = execute;
+
+        function execute(model, data) {
+            var result = (model != data.reference);
+            return ValidatorResponseFactory.create(model, data, result);
+
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otus.validation')
+        .service('MandatoryValidatorService', MandatoryValidatorService);
+
+    MandatoryValidatorService.$inject = ['ValidatorResponseFactory'];
+
+    function MandatoryValidatorService(ValidatorResponseFactory) {
+        var self = this;
+        self.execute = execute;
+
+        function execute(answer, data) {
+            console.log('mandatory');
+            console.log(answer);
+            var result = (angular.equals({}, answer)) ? true : false;
+            return ValidatorResponseFactory.create(answer, data, result);
         }
     }
 
@@ -764,17 +766,17 @@
         self.isValidSpecials = isValidSpecials;
         self.isValidAlphanumeric = isValidAlphanumeric;
 
-        function create(reference, data, result) {
-            return new ValidatorResponse(reference, data, result);
+        function create(answer, data, result) {
+            return new ValidatorResponse(answer, data, result);
         }
 
         return self;
     }
 
-    function ValidatorResponse(reference, data, result) {
+    function ValidatorResponse(answer, data, result) {
         var self = this;
         self.name = {};
-        self.reference = reference;
+        self.answer = answer;
         self.data = data;
         self.result = result;
     }

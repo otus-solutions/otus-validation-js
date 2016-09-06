@@ -12,8 +12,9 @@
         self.execute = execute;
 
         function execute(model, data) {
-            if (data.reference == true) {
-                var result = (model > new Date());
+            var result;
+            if (data.reference === true) {
+                result = (model > new Date());
             } else {
                 return;
             }

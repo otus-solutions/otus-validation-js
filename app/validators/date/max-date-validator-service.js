@@ -12,7 +12,7 @@
         self.execute = execute;
 
         function execute(model, data) {
-            var result = (model <= data.reference);
+            var result = (model <= new Date(data.reference));
             return ValidatorResponseFactory.create(model, data, result);
         }
     }

@@ -11,14 +11,14 @@
         var self = this;
         self.create = create;
 
-        function create(name, data, model) {
-            return new Validator(name, data, model, ValidationHubService);
+        function create(name, data, answer) {
+            return new Validator(name, data, answer, ValidationHubService);
         }
 
         return self;
     }
 
-    function Validator(name, data, model, ValidationHubService) {
+    function Validator(name, data, answer, ValidationHubService) {
         var self = this;
         self.name = name;
         self.enable = true;
@@ -27,7 +27,7 @@
 
         function execute() {
             if (self.enable) {
-                var validationResponse = ValidationHubService.validators[self.name].execute(model, self.data);
+                var validationResponse = ValidationHubService.validators[self.name].execute(answer, self.data);
                 validationResponse.name = self.name;
 
                 return validationResponse;

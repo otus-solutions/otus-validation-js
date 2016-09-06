@@ -11,17 +11,17 @@
         self.isValidSpecials = isValidSpecials;
         self.isValidAlphanumeric = isValidAlphanumeric;
 
-        function create(reference, data, result) {
-            return new ValidatorResponse(reference, data, result);
+        function create(answer, data, result) {
+            return new ValidatorResponse(answer, data, result);
         }
 
         return self;
     }
 
-    function ValidatorResponse(reference, data, result) {
+    function ValidatorResponse(answer, data, result) {
         var self = this;
         self.name = {};
-        self.reference = reference;
+        self.answer = answer;
         self.data = data;
         self.result = result;
     }
