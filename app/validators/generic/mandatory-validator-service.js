@@ -13,8 +13,8 @@
 
         function execute(answer, data) {
             console.log('mandatory');
-            console.log(answer);
-            var result = (angular.equals({}, answer)) ? true : false;
+            console.log(answer.data);
+            var result = (angular.equals(answer.data, {})) ? false : true;
             return ValidatorResponseFactory.create(answer, data, result);
         }
     }

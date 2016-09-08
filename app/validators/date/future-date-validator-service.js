@@ -11,14 +11,14 @@
         var self = this;
         self.execute = execute;
 
-        function execute(model, data) {
+        function execute(answer, data) {
             var result;
             if (data.reference === true) {
-                result = (model > new Date());
+                result = (new Date(answer) > new Date());
             } else {
                 return;
             }
-            return ValidatorResponseFactory.create(model, data, result);
+            return ValidatorResponseFactory.create(answer, data, result);
         }
     }
 

@@ -12,8 +12,10 @@
         self.execute = execute;
 
         function execute(answer, reference) {
-            var formatedAnswer = new Date(answer.data).toLocaleDateString();
-            var result = (new Date(reference.initial).toLocaleDateString() < formatedAnswer && formatedAnswer < new Date(reference.end).toLocaleDateString());
+            var formatedAnswer = new Date(answer.data);
+            var check = (new Date(reference.initial) < formatedAnswer && formatedAnswer < new Date(reference.end));
+            var result = !check;
+
             return ValidatorResponseFactory.create(answer, reference, result);
         }
     }

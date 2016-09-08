@@ -11,9 +11,9 @@
         var self = this;
         self.execute = execute;
 
-        function execute(model, data) {
-            var result = (model <= new Date(data.reference));
-            return ValidatorResponseFactory.create(model, data, result);
+        function execute(answer, data) {
+            var result = (new Date(answer) <= new Date(data.reference));
+            return ValidatorResponseFactory.create(answer, data, result);
         }
     }
 
