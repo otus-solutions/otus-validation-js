@@ -28,7 +28,7 @@
         function execute() {
             if (self.enable) {
                 var validationResponse = ValidationHubService.validators[self.name].execute(answer, self.data);
-                validationResponse.name = self.name;
+                validationResponse = self.name;
 
                 return validationResponse;
             }

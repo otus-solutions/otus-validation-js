@@ -12,10 +12,13 @@
         self.execute = execute;
 
         function execute(model, data) {
-            var result = data.reference.toString();
-            var comma = result.split('.');
-            if (comma[1] && comma[1].length === model) {
-                result = true;
+            var result;
+
+            if (data.reference === model.toString()) {
+                var comma = result.split('.');
+                if (comma[1] && comma[1].length === model) {
+                    result = true;
+                }
             } else {
                 result = false;
             }

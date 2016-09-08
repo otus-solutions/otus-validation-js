@@ -12,9 +12,9 @@
         self.execute = execute;
 
         function execute(model, data) {
-            var result = data.reference.toString();
+            var result;
 
-            if (result.length === model) {
+            if (data.reference === model.toString()) {
                 result = true;
             } else {
                 result = false;
