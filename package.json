@@ -18,8 +18,8 @@
         "url": "git@github.com:ccem-dev/otus-validation-js.git"
     },
     "scripts": {
-        "tdd": "karma start karma.conf.js --auto-watch --browsers Chrome",
         "test": "karma start karma.conf.js --single-run",
+        "tdd": "karma start karma.conf.js --auto-watch --browsers Chrome",
         "gulp": "gulp",
         "karma": "karma",
         "build": "gulp compress",

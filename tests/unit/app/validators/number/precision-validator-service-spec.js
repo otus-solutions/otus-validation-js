@@ -1,4 +1,4 @@
-describe('PrecisionValidatorService', function() {
+xdescribe('PrecisionValidatorService', function() {
 
     beforeEach(function() {
         module('otus.validation');

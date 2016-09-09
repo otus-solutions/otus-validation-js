@@ -14,7 +14,7 @@ describe('ElementRegisterFactory', function() {
 
         var elementRegister = factory.create(elementID, elementModel);
         expect(elementRegister.id).toEqual(elementID);
-        expect(elementRegister.model).toEqual(elementModel);
+        expect(elementRegister.answer).toEqual(elementModel);
     });
 
     it('should create Validator when call addValidator', function() {

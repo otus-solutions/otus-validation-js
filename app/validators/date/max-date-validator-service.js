@@ -12,7 +12,8 @@
         self.execute = execute;
 
         function execute(answer, data) {
-            var result = (new Date(answer) <= new Date(data.reference));
+          console.log(answer);
+            var result = (new Date(answer.data) <= new Date(data.reference));
             return ValidatorResponseFactory.create(answer, data, result);
         }
     }

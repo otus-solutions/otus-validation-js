@@ -13,9 +13,7 @@
 
         function execute(answer, reference) {
             var formatedAnswer = new Date(answer.data);
-            var result = (new Date(reference.end) < formatedAnswer || formatedAnswer < new Date(reference.initial));
-            console.log('range result:');
-            console.log(result);
+            var result = (new Date(reference.end) > formatedAnswer && formatedAnswer > new Date(reference.initial));
             return ValidatorResponseFactory.create(answer, reference, result);
         }
     }

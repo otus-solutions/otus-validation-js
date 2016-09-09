@@ -8,24 +8,34 @@ describe('FutureDateValidatorService', function() {
         });
     });
 
-    it('should return true response when model is future', function() {
-        var model = new Date(2020, 1, 1);
+    it('should return true response when answer is future', function() {
+        var answer = new Date(2020, 1, 1);
         var data = {
             'reference': true
-        }
+        };
 
-        var response = service.execute(model, data);
-        expect(true).toEqual(response.result);
+        var response = service.execute(answer, data);
+        expect(response.result).toEqual(true);
     });
 
-    it('should return false response value out range', function() {
-        var model = new Date(2001, 1, 1);
+    it('should return false when answer value is out of range', function() {
+        var answer = new Date(2000, 1, 1);
+        var data = {
+            'reference': true
+        };
+
+        var response = service.execute(answer, data);
+        expect(response.result).toEqual(false);
+    });
+
+    it('should return true when validator is not enabled', function() {
+        var answer = new Date(2001, 1, 1);
         var data = {
             'reference': false
-        }
+        };
 
-        var response = service.execute(model, data);
-        expect(response).not.toBeDefined();
+        var response = service.execute(answer, data);
+        expect(response.result).toEqual(true);
     });
 
 });

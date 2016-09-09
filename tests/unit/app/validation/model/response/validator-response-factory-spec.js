@@ -20,7 +20,7 @@ describe('ValidatorResponseFactory', function() {
         };
 
         var validatorResponse = factory.create(model, data, result);
-        expect(validatorResponse.reference).toEqual(model);
+        expect(validatorResponse.answer).toEqual(model);
         expect(validatorResponse.data).toEqual(data);
         expect(validatorResponse.result).toEqual(result);
     });

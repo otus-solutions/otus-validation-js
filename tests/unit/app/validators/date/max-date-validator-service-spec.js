@@ -9,7 +9,7 @@ describe('MaxDateValidatorService', function() {
     });
 
     it('should return true response when is less than reference', function() {
-        var model = new Date(2016, 1, 1);
+        var model = {'data': '1/1/2016'};
         var data = {
             'reference': new Date(2016, 1, 1)
         };
@@ -20,6 +20,7 @@ describe('MaxDateValidatorService', function() {
 
     it('should return false response when is greater than reference', function() {
         var model = new Date(2016, 2, 1);
+        console.log(model);
         var data = {
             'reference': new Date(2016, 1, 1)
         };
