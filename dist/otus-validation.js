@@ -242,55 +242,12 @@
         function execute() {
             if (self.enable) {
                 var validationResponse = ValidationHubService.validators[self.name].execute(answer, self.data);
+                console.log(self.name);
+                console.log(validationResponse);
                 validationResponse.name = self.name;
 
                 return validationResponse;
             }
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otus.validation')
-        .service('DistinctValidatorService', DistinctValidatorService);
-
-    DistinctValidatorService.$inject = ['ValidatorResponseFactory'];
-
-    function DistinctValidatorService(ValidatorResponseFactory) {
-        var self = this;
-        self.execute = execute;
-
-        function execute(model, data) {
-            var result = (model != data.reference);
-            return ValidatorResponseFactory.create(model, data, result);
-
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otus.validation')
-        .service('MandatoryValidatorService', MandatoryValidatorService);
-
-    MandatoryValidatorService.$inject = ['ValidatorResponseFactory'];
-
-    function MandatoryValidatorService(ValidatorResponseFactory) {
-        var self = this;
-        self.execute = execute;
-
-        function execute(answer, data) {
-            console.log('mandatory');
-            console.log(answer.data);
-            var result = (angular.equals(answer.data, {})) ? false : true;
-            return ValidatorResponseFactory.create(answer, data, result);
         }
     }
 
@@ -311,9 +268,9 @@
 
         function execute(answer, reference) {
             var formatedAnswer = new Date(answer.data);
-            var check = (new Date(reference.initial) < formatedAnswer && formatedAnswer < new Date(reference.end));
-            var result = !check;
-
+            var result = (new Date(reference.end) < formatedAnswer || formatedAnswer < new Date(reference.initial));
+            console.log('range result:');
+            console.log(result);
             return ValidatorResponseFactory.create(answer, reference, result);
         }
     }
@@ -338,7 +295,7 @@
             if (data.reference === true) {
                 result = (new Date(answer) > new Date());
             } else {
-                return;
+                result=true;
             }
             return ValidatorResponseFactory.create(answer, data, result);
         }
@@ -406,9 +363,54 @@
             if (data.reference === true) {
                 result = (model < new Date());
             } else {
-                return;
+                result = true;
             }
             return ValidatorResponseFactory.create(model, data, result);
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otus.validation')
+        .service('DistinctValidatorService', DistinctValidatorService);
+
+    DistinctValidatorService.$inject = ['ValidatorResponseFactory'];
+
+    function DistinctValidatorService(ValidatorResponseFactory) {
+        var self = this;
+        self.execute = execute;
+
+        function execute(model, data) {
+            var result = (model != data.reference);
+            return ValidatorResponseFactory.create(model, data, result);
+
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otus.validation')
+        .service('MandatoryValidatorService', MandatoryValidatorService);
+
+    MandatoryValidatorService.$inject = ['ValidatorResponseFactory'];
+
+    function MandatoryValidatorService(ValidatorResponseFactory) {
+        var self = this;
+        self.execute = execute;
+
+        function execute(answer, data) {
+            console.log('mandatory');
+            console.log(answer.data);
+            var result = (angular.equals(answer.data, {})) ? false : true;
+            return ValidatorResponseFactory.create(answer, data, result);
         }
     }
 
@@ -471,9 +473,9 @@
         self.execute = execute;
 
         function execute(model, data) {
-            var result = data.reference.toString();
+            var result;
 
-            if (result.length === model) {
+            if (data.reference === model.toString()) {
                 result = true;
             } else {
                 result = false;
@@ -499,10 +501,13 @@
         self.execute = execute;
 
         function execute(model, data) {
-            var result = data.reference.toString();
-            var comma = result.split('.');
-            if (comma[1] && comma[1].length === model) {
-                result = true;
+            var result;
+
+            if (data.reference === model.toString()) {
+                var comma = result.split('.');
+                if (comma[1] && comma[1].length === model) {
+                    result = true;
+                }
             } else {
                 result = false;
             }
@@ -643,15 +648,15 @@
         var self = this;
         self.execute = execute;
 
-        function execute(model, data) {
+        function execute(answer, data) {
             var result;
 
-            if (data.reference == true) {
-                result = ValidatorResponseFactory.isValidSpecials(model);
+            if (data.reference === true) {
+                result = ValidatorResponseFactory.isValidSpecials(answer);
             } else {
-                result = model.toString();
+                result = true;
             }
-            return ValidatorResponseFactory.create(model, data, result);
+            return ValidatorResponseFactory.create(answer, data, result);
         }
     }
 }());
@@ -669,15 +674,15 @@
         var self = this;
         self.execute = execute;
 
-        function execute(model, data) {
+        function execute(answer, data) {
             var result;
 
-            if (data.reference == true) {
-                result = model.toString().toUpperCase();
+            if (data.reference === true) {
+                result = answer.toString().toUpperCase();
             } else {
-                result = model.toString();
+                result = true;
             }
-            return ValidatorResponseFactory.create(model, data, result);
+            return ValidatorResponseFactory.create(answer, data, result);
         }
     }
 
@@ -779,8 +784,8 @@
     function ValidatorResponse(answer, data, result) {
         var self = this;
         self.name = {};
-        self.answer = answer;
         self.data = data;
+        self.answer = answer;
         self.result = result;
     }
 

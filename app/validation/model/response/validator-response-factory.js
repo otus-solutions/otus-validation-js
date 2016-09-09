@@ -21,8 +21,8 @@
     function ValidatorResponse(answer, data, result) {
         var self = this;
         self.name = {};
-        self.answer = answer;
         self.data = data;
+        self.answer = answer;
         self.result = result;
     }
 

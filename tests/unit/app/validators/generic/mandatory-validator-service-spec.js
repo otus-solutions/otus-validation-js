@@ -25,7 +25,7 @@ describe('MandatoryValidatorService', function() {
     });
 
     it('should return false response when model is not answered (Object)', function() {
-        var model = undefined;
+        var model;
         var data = {};
 
         var response = service.execute(model, data);

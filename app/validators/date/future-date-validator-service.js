@@ -16,7 +16,7 @@
             if (data.reference === true) {
                 result = (new Date(answer) > new Date());
             } else {
-                return;
+                result=true;
             }
             return ValidatorResponseFactory.create(answer, data, result);
         }

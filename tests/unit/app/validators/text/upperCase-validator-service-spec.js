@@ -13,7 +13,7 @@ describe('UpperCaseValidatorService', function() {
 
         var data = {
             'reference': true
-        }
+        };
 
         var response = service.execute(model, data);
         expect(response.result).toEqual("TESTE");
@@ -24,7 +24,7 @@ describe('UpperCaseValidatorService', function() {
 
         var data = {
             'reference': true
-        }
+        };
 
         var response = service.execute(model, data);
         expect(response.result).toEqual("TESTE");
@@ -35,7 +35,7 @@ describe('UpperCaseValidatorService', function() {
 
         var data  = {
             'reference': false
-        }
+        };
 
         var response = service.execute(model, data);
         expect(response.result).toEqual("teste");
