@@ -8,7 +8,7 @@ describe('MinDateValidatorService', function() {
         });
     });
 
-    it('should return false response when is less than reference', function() {
+    it('should return false when answer value is below the reference', function() {
         var model = new Date(2015, 1, 1);
         var data = {
             'reference': new Date(2016, 1, 1)
@@ -18,7 +18,7 @@ describe('MinDateValidatorService', function() {
         expect(response.result).toEqual(false);
     });
 
-    it('should return true response when is greater than reference', function() {
+    it('should return true when answer value is above the reference', function() {
         var model = new Date(2016, 2, 1);
         var data = {
             'reference': new Date(2016, 1, 1)

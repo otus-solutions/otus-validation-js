@@ -1,4 +1,4 @@
-xdescribe('PastDateValidatorService', function() {
+describe('PastDateValidatorService', function() {
 
     beforeEach(function() {
         module('otus.validation');
@@ -8,24 +8,35 @@ xdescribe('PastDateValidatorService', function() {
         });
     });
 
-    it('should return true response when model is past', function() {
-        var model = new Date(2000, 1, 1);
-        var data = {
-            'reference': true
-        };
-
-        var response = service.execute(model, data);
-        expect(true).toEqual(response.result);
-    });
-
-    it('should return false response value out past', function() {
-        var model = new Date(2020, 1, 1);
+    it('should return true when reference equals to false', function() {
+        var answer = new Date(2000, 1, 1);
         var data = {
             'reference': false
         };
 
-        var response = service.execute(model, data);
-        expect(response).not.toBeDefined();
+        var response = service.execute(answer, data);
+        expect(response.result).toEqual(true);
     });
 
+    it('should return false when value out past', function() {
+        var answer = new Date();
+        answer.setDate(answer.getDate() + 1);
+        var data = {
+            'reference': true
+        };
+
+        var response = service.execute(answer, data);
+        expect(response.result).toEqual(false);
+    });
+
+    it('should return true when value is in past', function() {
+        var answer = new Date();
+        answer.setDate(answer.getDate() - 1);
+        var data = {
+            'reference': true
+        };
+
+        var response = service.execute(answer, data);
+        expect(response.result).toEqual(true);
+    });
 });
