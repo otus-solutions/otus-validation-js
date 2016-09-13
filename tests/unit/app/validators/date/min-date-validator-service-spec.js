@@ -32,10 +32,10 @@ describe('MinDateValidatorService', function() {
 
     it('should return true when answer value is above the reference', function() {
         var answer = {
-            'data': '1/1/2017'
+            'data': new Date('Wed Sep 07 2016 00:00:00 GMT-0300 (BRT)')
         };
         var data = {
-            'reference': '1/1/2016'
+            'reference': '2016-07-01T03:00:00.000Z'
         };
 
         var response = service.execute(answer, data);

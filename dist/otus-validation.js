@@ -264,12 +264,17 @@
         var self = this;
         self.execute = execute;
 
-        function execute(answer, reference) {
-            var formatedAnswer = new Date(answer.data).setHours(0,0,0,0);
-            var initialDate = new Date(reference.initial).setHours(0,0,0,0);
-            var endDate = new Date(reference.end).setHours(0,0,0,0);
+        function execute(answer, data) {
+
+            if (angular.equals(answer.data, {})) {
+                return ValidatorResponseFactory.create(answer, data, true);
+            }
+
+            var formatedAnswer = new Date(answer.data).setHours(0, 0, 0, 0);
+            var initialDate = new Date(data.initial).setHours(0, 0, 0, 0);
+            var endDate = new Date(data.end).setHours(0, 0, 0, 0);
             var result = (endDate >= formatedAnswer && formatedAnswer >= initialDate);
-            return ValidatorResponseFactory.create(answer, reference, result);
+            return ValidatorResponseFactory.create(answer, data, result);
         }
     }
 
@@ -289,6 +294,11 @@
         self.execute = execute;
 
         function execute(answer, data) {
+
+            if (angular.equals(answer.data, {})) {
+                return ValidatorResponseFactory.create(answer, data, true);
+            }
+
             var result;
             if (data.reference === true) {
                 var formatedAnswer = new Date(answer.data).setHours(0, 0, 0, 0);
@@ -317,8 +327,15 @@
         self.execute = execute;
 
         function execute(answer, data) {
-            var formatedAnswer = new Date(answer.data).setHours(0, 0, 0, 0);
-            var maxDate = new Date(data.reference).setHours(0, 0, 0, 0);
+
+            if (angular.equals(answer.data, {})) {
+                return ValidatorResponseFactory.create(answer, data, true);
+            }
+
+            var formatedAnswer = new Date(answer.data);
+            formatedAnswer.setHours(0, 0, 0, 0);
+            var maxDate = new Date(data.reference);
+            maxDate.setHours(0, 0, 0, 0);
             var result = (formatedAnswer <= maxDate);
             return ValidatorResponseFactory.create(answer, data, result);
         }
@@ -340,9 +357,14 @@
         self.execute = execute;
 
         function execute(answer, data) {
-            var formatedAnswer = new Date(answer.data).setHours(0, 0, 0, 0);
-            var maxDate = new Date(data.reference).setHours(0, 0, 0, 0);
-            var result = (formatedAnswer >= maxDate);
+            if (angular.equals(answer.data, {})) {
+                return ValidatorResponseFactory.create(answer, data, true);
+            }
+            var formatedAnswer = new Date(answer.data);
+            formatedAnswer.setHours(0, 0, 0, 0);
+            var minDate = new Date(data.reference);
+            minDate.setHours(0, 0, 0, 0);
+            var result = (formatedAnswer >= minDate);
             return ValidatorResponseFactory.create(answer, data, result);
         }
     }
@@ -363,6 +385,9 @@
         self.execute = execute;
 
         function execute(answer, data) {
+            if (angular.equals(answer.data, {})) {
+                return ValidatorResponseFactory.create(answer, data, true);
+            }
             var result;
             if (data.reference === true) {
                 var formatedAnswer = new Date(answer.data).setHours(0, 0, 0, 0);
@@ -391,6 +416,9 @@
         self.execute = execute;
 
         function execute(answer, data) {
+            if (angular.equals(answer.data, {})) {
+                return ValidatorResponseFactory.create(answer, data, true);
+            }
             var result = (answer.data != data.reference);
             return ValidatorResponseFactory.create(answer, data, result);
 
@@ -434,6 +462,9 @@
         self.execute = execute;
 
         function execute(answer, data) {
+            if (angular.equals(answer.data, {})) {
+                return ValidatorResponseFactory.create(answer, data, true);
+            }
             var result = (data.initial <= answer.data && answer.data <= data.end);
             return ValidatorResponseFactory.create(answer, data, result);
 
@@ -456,6 +487,10 @@
         self.execute = execute;
 
         function execute(answer, data) {
+
+            if (angular.equals(answer.data, {})) {
+                return ValidatorResponseFactory.create(answer, data, true);
+            }
             var result = (answer.data >= data.reference);
             return ValidatorResponseFactory.create(answer, data, result);
         }
@@ -477,6 +512,9 @@
         self.execute = execute;
 
         function execute(answer, data) {
+            if (angular.equals(answer.data, {})) {
+                return ValidatorResponseFactory.create(answer, data, true);
+            }
             var result;
 
             if (data.reference === answer.data.toString().length) {
@@ -505,13 +543,15 @@
         self.execute = execute;
 
         function execute(answer, data) {
+            if (angular.equals(answer.data, {})) {
+                return ValidatorResponseFactory.create(answer, data, true);
+            }
             var result;
             var splitedAnswer = (answer.data.toString().split('.'));
             if (splitedAnswer[1]) {
                 result = (data.reference === splitedAnswer[1].length);
-            }
-            else{
-              result = false;
+            } else {
+                result = false;
             }
             return ValidatorResponseFactory.create(answer, data, result);
         }
@@ -532,6 +572,10 @@
         self.execute = execute;
 
         function execute(answer, data) {
+            if (angular.equals(answer.data, {})) {
+                return ValidatorResponseFactory.create(answer, data, true);
+            }
+
             var result = (answer.data <= data.reference);
             return ValidatorResponseFactory.create(answer, data, result);
         }
@@ -553,6 +597,9 @@
         self.execute = execute;
 
         function execute(model, data) {
+            if (angular.equals(answer.data, {})) {
+                return ValidatorResponseFactory.create(answer, data, true);
+            }
             var result;
 
             if (data.reference === true) {
@@ -579,6 +626,9 @@
         self.execute = execute;
 
         function execute(answer, data) {
+            if (angular.equals(answer.data, {})) {
+                return ValidatorResponseFactory.create(answer, data, true);
+            }
             var result;
 
             if (data.reference) {
@@ -606,6 +656,9 @@
         self.execute = execute;
 
         function execute(answer, data) {
+            if (angular.equals(answer.data, {})) {
+                return ValidatorResponseFactory.create(answer, data, true);
+            }
             var result = (answer.data.length <= data.size);
             return ValidatorResponseFactory.create(answer, data, result);
         }
@@ -627,6 +680,9 @@
         self.execute = execute;
 
         function execute(answer, data) {
+            if (angular.equals(answer.data, {})) {
+                return ValidatorResponseFactory.create(answer, data, true);
+            }
             var result = (answer.data.length >= data.size);
             return ValidatorResponseFactory.create(answer, data, result);
         }
@@ -648,6 +704,9 @@
         self.execute = execute;
 
         function execute(answer, data) {
+            if (angular.equals(answer.data, {})) {
+                return ValidatorResponseFactory.create(answer, data, true);
+            }
             var result;
 
             if (data.reference === true) {
@@ -674,12 +733,15 @@
         self.execute = execute;
 
         function execute(answer, data) {
+            if (angular.equals(answer.data, {})) {
+                return ValidatorResponseFactory.create(answer, data, true);
+            }
             var result;
 
             if (data.reference === true) {
                 result = answer.data.toString().toUpperCase();
             } else {
-                result =  answer.data.toString();
+                result = answer.data.toString();
             }
             return ValidatorResponseFactory.create(answer, data, result);
         }
@@ -701,6 +763,9 @@
         self.execute = execute;
 
         function execute(answer, data) {
+            if (angular.equals(answer.data, {})) {
+                return ValidatorResponseFactory.create(answer, data, true);
+            }
             var formatedAnswer = new Date(answer.data);
             formatedAnswer.setDate(1);
             formatedAnswer.setMonth(0);
@@ -730,6 +795,9 @@
         self.execute = execute;
 
         function execute(answer, data) {
+            if (angular.equals(answer.data, {})) {
+                return ValidatorResponseFactory.create(answer, data, true);
+            }
             var formatedAnswer = new Date(answer.data);
             formatedAnswer.setDate(1);
             formatedAnswer.setMonth(0);
