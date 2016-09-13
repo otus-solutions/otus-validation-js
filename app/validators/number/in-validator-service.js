@@ -11,9 +11,9 @@
         var self = this;
         self.execute = execute;
 
-        function execute(model, data) {
-            var result = (data.initial < model && model < data.end);
-            return ValidatorResponseFactory.create(model, data, result);
+        function execute(answer, data) {
+            var result = (data.initial < answer.data && answer.data < data.end);
+            return ValidatorResponseFactory.create(answer, data, result);
 
         }
     }

@@ -8,19 +8,19 @@ describe('DistinctValidatorService', function() {
         });
     });
 
-    it('should return true response when model is distinct to model', function() {
-        var model = 1;
+    it('should return true response when answer is distinct to reference value', function() {
+        var answer = {'data': 1};
         var data = {'reference' : 10};
 
-        var response = service.execute(model, data);
+        var response = service.execute(answer, data);
         expect(true).toEqual(response.result);
     });
 
-    it('should return false response when model dont distinct to model', function() {
-        var model = 10;
+    it('should return false response when answer dont distinct to reference value', function() {
+        var answer = {'data': 10};
         var data = {'reference' : 10};
 
-        var response = service.execute(model, data);
+        var response = service.execute(answer, data);
         expect(false).toEqual(response.result);
     });
 

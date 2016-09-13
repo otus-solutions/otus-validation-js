@@ -11,15 +11,15 @@
         var self = this;
         self.execute = execute;
 
-        function execute(model, data) {
+        function execute(answer, data) {
             var result;
 
-            if (data.reference === model.toString()) {
+            if (data.reference === answer.data.toString().length) {
                 result = true;
             } else {
                 result = false;
             }
-            return ValidatorResponseFactory.create(model, data, result);
+            return ValidatorResponseFactory.create(answer, data, result);
 
         }
     }

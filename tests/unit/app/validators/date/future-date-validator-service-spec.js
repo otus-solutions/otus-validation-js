@@ -9,7 +9,9 @@ describe('FutureDateValidatorService', function() {
     });
 
     it('should return true response when answer is future', function() {
-        var answer = new Date(2020, 1, 1);
+        var answer = {
+            'data': '01/01/2020'
+        };
         var data = {
             'reference': true
         };
@@ -19,7 +21,9 @@ describe('FutureDateValidatorService', function() {
     });
 
     it('should return false when answer value is out of range', function() {
-        var answer = new Date(2000, 1, 1);
+        var answer = {
+            'data': '01/01/2000'
+        };
         var data = {
             'reference': true
         };
@@ -29,7 +33,9 @@ describe('FutureDateValidatorService', function() {
     });
 
     it('should return true when validator is not enabled', function() {
-        var answer = new Date(2001, 1, 1);
+        var answer = {
+            'data': '01/01/2020'
+        };
         var data = {
             'reference': false
         };

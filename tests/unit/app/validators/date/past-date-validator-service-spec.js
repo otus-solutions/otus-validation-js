@@ -9,7 +9,9 @@ describe('PastDateValidatorService', function() {
     });
 
     it('should return true when reference equals to false', function() {
-        var answer = new Date(2000, 1, 1);
+        var answer = {
+            'data': '1/1/2016'
+        };
         var data = {
             'reference': false
         };
@@ -18,9 +20,10 @@ describe('PastDateValidatorService', function() {
         expect(response.result).toEqual(true);
     });
 
-    it('should return false when value out past', function() {
-        var answer = new Date();
-        answer.setDate(answer.getDate() + 1);
+    it('should return false when value is not in past', function() {
+        var answer = {
+            'data': new Date().toLocaleString()
+        };
         var data = {
             'reference': true
         };
@@ -30,8 +33,9 @@ describe('PastDateValidatorService', function() {
     });
 
     it('should return true when value is in past', function() {
-        var answer = new Date();
-        answer.setDate(answer.getDate() - 1);
+        var answer = {
+            'data': '1/1/2016'
+        };
         var data = {
             'reference': true
         };

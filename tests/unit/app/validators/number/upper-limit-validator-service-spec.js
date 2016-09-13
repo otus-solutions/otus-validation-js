@@ -8,23 +8,23 @@ describe('UpperLimitValidatorService', function() {
         });
     });
 
-    it('should return true response when is less than reference', function() {
-        var model = 1;
+    it('should return true response when answer value is below the reference', function() {
+        var answer = {'data': 1};
         var data = {
             'reference': 10
         };
 
-        var response = service.execute(model, data);
+        var response = service.execute(answer, data);
         expect(response.result).toEqual(true);
     });
 
-    it('should return false response when is greater than reference', function() {
-        var model = 10;
+    it('should return false response when is above the reference', function() {
+        var answer = {'data': 10};
         var data = {
             'reference': 1
         };
 
-        var response = service.execute(model, data);
+        var response = service.execute(answer, data);
         expect(response.result).toEqual(false);
     });
 

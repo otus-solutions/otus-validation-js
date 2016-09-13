@@ -15,9 +15,9 @@
             var result;
 
             if (data.reference === true) {
-                result = answer.toString().toUpperCase();
+                result = answer.data.toString().toUpperCase();
             } else {
-                result = true;
+                result =  answer.data.toString();
             }
             return ValidatorResponseFactory.create(answer, data, result);
         }

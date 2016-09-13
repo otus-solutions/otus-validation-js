@@ -9,22 +9,22 @@ describe('MinLengthValidatorService', function() {
     });
 
     it('should return true response when size is greater than reference', function() {
-        var model = 'Diogo';
+        var answer = {'data': 'Example'};
         var data = {
             'size': 1
         };
 
-        var response = service.execute(model, data);
+        var response = service.execute(answer, data);
         expect(response.result).toEqual(true);
     });
 
     it('should return false response when size is less than reference', function() {
-        var model = 'Diogo';
+        var answer = {'data': 'Example'};
         var data = {
             'size': 100
         };
 
-        var response = service.execute(model, data);
+        var response = service.execute(answer, data);
         expect(response.result).toEqual(false);
     });
 

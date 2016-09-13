@@ -11,21 +11,16 @@
         var self = this;
         self.execute = execute;
 
-        function execute(model, data) {
+        function execute(answer, data) {
             var result;
-
-            if (data.reference === model.toString()) {
-                var comma = result.split('.');
-                if (comma[1] && comma[1].length === model) {
-                    result = true;
-                }
-            } else {
-                result = false;
+            var splitedAnswer = (answer.data.toString().split('.'));
+            if (splitedAnswer[1]) {
+                result = (data.reference === splitedAnswer[1].length);
             }
-
-            return ValidatorResponseFactory.create(model, data, result);
-
+            else{
+              result = false;
+            }
+            return ValidatorResponseFactory.create(answer, data, result);
         }
     }
-
 }());

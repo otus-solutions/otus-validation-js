@@ -8,23 +8,27 @@ describe('MaxDateValidatorService', function() {
         });
     });
 
-    it('should return true when answer value is below the reference', function() {
-        var model = {'data': '1/1/2016'};
+    it('should return true when answer value is below or equal the reference', function() {
+        var answer = {
+            'data': '1/1/2016'
+        };
         var data = {
-            'reference': new Date(2016, 1, 1)
+            'reference': '1/1/2016'
         };
 
-        var response = service.execute(model, data);
+        var response = service.execute(answer, data);
         expect(response.result).toEqual(true);
     });
 
     it('should return false when answer valuer is above the reference', function() {
-        var model = new Date(2016, 2, 1);
+        var answer = {
+            'data': '2/1/2017'
+        };
         var data = {
-            'reference': new Date(2016, 1, 1)
+            'reference': '1/1/2016'
         };
 
-        var response = service.execute(model, data);
+        var response = service.execute(answer, data);
         expect(response.result).toEqual(false);
     });
 

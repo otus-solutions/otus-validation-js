@@ -14,9 +14,11 @@
         function execute(answer, data) {
             var result;
             if (data.reference === true) {
-                result = (new Date(answer) > new Date());
+                var formatedAnswer = new Date(answer.data).setHours(0, 0, 0, 0);
+                var todayDate = new Date().setHours(0, 0, 0, 0);
+                result = (formatedAnswer > todayDate);
             } else {
-                result=true;
+                result = true;
             }
             return ValidatorResponseFactory.create(answer, data, result);
         }

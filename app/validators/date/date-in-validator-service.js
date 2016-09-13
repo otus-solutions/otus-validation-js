@@ -12,9 +12,9 @@
         self.execute = execute;
 
         function execute(answer, reference) {
-            var formatedAnswer = new Date(answer.data);
-            var initialDate = new Date(reference.initial);
-            var endDate = new Date(reference.end);
+            var formatedAnswer = new Date(answer.data).setHours(0,0,0,0);
+            var initialDate = new Date(reference.initial).setHours(0,0,0,0);
+            var endDate = new Date(reference.end).setHours(0,0,0,0);
             var result = (endDate > formatedAnswer && formatedAnswer > initialDate);
             return ValidatorResponseFactory.create(answer, reference, result);
         }

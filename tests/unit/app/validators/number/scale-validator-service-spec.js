@@ -1,4 +1,4 @@
-xdescribe('ScaleValidatorService', function() {
+describe('ScaleValidatorService', function() {
 
     beforeEach(function() {
         module('otus.validation');
@@ -8,15 +8,25 @@ xdescribe('ScaleValidatorService', function() {
         });
     });
 
-    it('should be return length to reference', function() {
+    it('should return true if decimal length equals to reference', function() {
         //scale deve ler os números a partir da virgula
-        var model = 2;
+        var answer = {'data': 123.02};
         var data = {
-            'reference': 123.56
+            'reference': 2
         };
 
-        var response = service.execute(model, data);
+        var response = service.execute(answer, data);
         expect(response.result).toBe(true);
+    });
+
+    it('should return true if decimal length is not equal to reference', function() {
+        var answer = {'data': 123.0};
+        var data = {
+            'reference': 2
+        };
+
+        var response = service.execute(answer, data);
+        expect(response.result).toBe(false);
     });
 
 });

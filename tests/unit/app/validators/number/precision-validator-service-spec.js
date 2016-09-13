@@ -1,4 +1,4 @@
-xdescribe('PrecisionValidatorService', function() {
+describe('PrecisionValidatorService', function() {
 
     beforeEach(function() {
         module('otus.validation');
@@ -8,15 +8,26 @@ xdescribe('PrecisionValidatorService', function() {
         });
     });
 
-    it('should be return true if precision number is valid', function() {
+    it('should be return true if quantity of numbers is equal to reference', function() {
         //quantidade total de digitos do número.
-        var model = 5;
+        var answer = {'data': 12345};
+        var data = {
+            'reference': 5
+        };
+
+        var response = service.execute(answer, data);
+        expect(response.result).toBe(true);
+    });
+
+    it('should be return false if quantity of numbers is not equal to reference', function() {
+        //quantidade total de digitos do número.
+        var answer = {'data': 4};
         var data = {
             'reference': 12356
         };
 
-        var response = service.execute(model, data);
-        expect(response.result).toBe(true);
+        var response = service.execute(answer, data);
+        expect(response.result).toBe(false);
     });
 
 });

@@ -14,8 +14,9 @@
         function execute(answer, data) {
             var result;
             if (data.reference === true) {
-                answer.setHours(0, 0, 0, 0);
-                result = (answer < new Date().setHours(0, 0, 0, 0));
+                var formatedAnswer = new Date(answer.data).setHours(0, 0, 0, 0);
+                var todayDate = new Date().setHours(0, 0, 0, 0);
+                result = (formatedAnswer < todayDate);
             } else {
                 result = true;
             }
