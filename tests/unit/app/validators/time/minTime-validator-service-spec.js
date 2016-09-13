@@ -8,25 +8,44 @@ describe('MinTimeValidatorService', function() {
         });
     });
 
-    it('should be return false response when is less than reference', function() {
-        var model = '11:40';
-
+    it('should return true when answer is not given', function() {
+        var answer = {
+            'data': {}
+        };
         var data = {
-            'reference': '15:20'
-        }
+            'reference': {}
+        };
+        var response = service.execute(answer, data);
+        expect(response.result).toEqual(true);
+    });
 
-        var response = service.execute(model, data);
+    it('should be return false response when answer value is below reference (regardless the day)', function() {
+        var answer = {'data':'Thu Jan 01 1970 01:00:00 GMT-0300 (BRT)'};
+        var data = {
+            'reference': 'Mon Sep 12 2016 04:00:00 GMT-0300 (BRT)'
+        };
+
+        var response = service.execute(answer, data);
         expect(response.result).toBe(false);
     });
 
-    it('should be return true response when in greater than reference', function() {
-        var model = '17:00';
-
+    it('should be return true response when answer value is above reference (regardless the day)', function() {
+        var answer = {'data':'Mon Sep 12 2016 05:00:00 GMT-0300 (BRT)'};
         var data = {
-            'reference': '16:10'
-        }
+            'reference': 'Thu Jan 01 1970 04:00:00 GMT-0300 (BRT)'
+        };
 
-        var response = service.execute(model, data);
+        var response = service.execute(answer, data);
+        expect(response.result).toBe(true);
+    });
+
+    it('should be return true response when answer value is equal to reference (regardless the day)', function() {
+        var answer = {'data':'Mon Sep 12 2016 05:00:00 GMT-0300 (BRT)'};
+        var data = {
+            'reference': 'Thu Jan 01 1970 05:00:00 GMT-0300 (BRT)'
+        };
+
+        var response = service.execute(answer, data);
         expect(response.result).toBe(true);
     });
 

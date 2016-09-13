@@ -8,6 +8,15 @@ describe('FutureDateValidatorService', function() {
         });
     });
 
+    it('should return true when answer is not given', function() {
+        var answer = {
+            'data': {}
+        }; //mm/dd/yyyy
+        var data = {'reference':{}};
+        var response = service.execute(answer, data);
+        expect(response.result).toEqual(true);
+    });
+
     it('should return true response when answer is future', function() {
         var answer = {
             'data': '01/01/2020'
@@ -20,7 +29,7 @@ describe('FutureDateValidatorService', function() {
         expect(response.result).toEqual(true);
     });
 
-    it('should return false when answer value is out of range', function() {
+    it('should return false when answer value is not future', function() {
         var answer = {
             'data': '01/01/2000'
         };

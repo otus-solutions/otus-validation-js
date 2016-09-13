@@ -8,6 +8,17 @@ describe('LowerCaseValidatorService', function() {
         });
     });
 
+    it('should return true when answer is not given', function() {
+        var answer = {
+            'data': {}
+        }; 
+        var data = {
+            'reference': {}
+        };
+        var response = service.execute(answer, data);
+        expect(response.result).toEqual(true);
+    });
+
     it('should return response in lowerCase when data.reference is true', function() {
         var answer = {'data': 'TESTE'};
 

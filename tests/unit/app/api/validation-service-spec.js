@@ -74,8 +74,8 @@ describe('ValidationService', function() {
 
     it('should return response when call validateElement', function() {
         var elementID = 'ID';
-        var model = 5;
-        var elementRegister = ElementRegisterFactory.create(elementID, model);
+        var answer = 5;
+        var elementRegister = ElementRegisterFactory.create(elementID,answer);
         elementRegister.addValidator('upperLimit', {
             'reference': 10
         });
@@ -93,14 +93,14 @@ describe('ValidationService', function() {
     it('should return return all responses when call validateAllElements', function() {
         var elementID = 'ID';
         var elementIDTwo = 'ID2';
-        var model = 5;
+        var answer = 5;
 
-        var elementRegister = ElementRegisterFactory.create(elementID, model);
+        var elementRegister = ElementRegisterFactory.create(elementID, answer);
         elementRegister.addValidator('upperLimit', {
             'reference': 10
         });
 
-        var elementRegisterTwo = ElementRegisterFactory.create(elementIDTwo, model);
+        var elementRegisterTwo = ElementRegisterFactory.create(elementIDTwo,answer);
         elementRegisterTwo.addValidator('mandatory', {
             'reference': 10
         });

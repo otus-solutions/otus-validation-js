@@ -9,20 +9,18 @@ describe('ValidatorResponseFactory', function() {
     });
 
     it('should set correct values in validatorResponse', function() {
-        var model = {
-            'model': 'model'
+        var answer = {
+            'data': 'answer'
         };
         var data = {
-            'data': 'data'
+            'reference': 'data'
         };
-        var result = {
-            'result': 'result'
-        };
+        var result = true;
 
-        var validatorResponse = factory.create(model, data, result);
-        expect(validatorResponse.answer).toEqual(model);
+        var validatorResponse = factory.create(answer, data, result);
+        expect(validatorResponse.answer).toEqual(answer);
         expect(validatorResponse.data).toEqual(data);
-        expect(validatorResponse.result).toEqual(result);
+        expect(validatorResponse.result).toEqual(true);
     });
 
 });

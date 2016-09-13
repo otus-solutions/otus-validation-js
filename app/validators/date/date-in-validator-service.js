@@ -11,12 +11,17 @@
         var self = this;
         self.execute = execute;
 
-        function execute(answer, reference) {
-            var formatedAnswer = new Date(answer.data).setHours(0,0,0,0);
-            var initialDate = new Date(reference.initial).setHours(0,0,0,0);
-            var endDate = new Date(reference.end).setHours(0,0,0,0);
-            var result = (endDate > formatedAnswer && formatedAnswer > initialDate);
-            return ValidatorResponseFactory.create(answer, reference, result);
+        function execute(answer, data) {
+
+            if (angular.equals(answer.data, {})) {
+                return ValidatorResponseFactory.create(answer, data, true);
+            }
+
+            var formatedAnswer = new Date(answer.data).setHours(0, 0, 0, 0);
+            var initialDate = new Date(data.initial).setHours(0, 0, 0, 0);
+            var endDate = new Date(data.end).setHours(0, 0, 0, 0);
+            var result = (endDate >= formatedAnswer && formatedAnswer >= initialDate);
+            return ValidatorResponseFactory.create(answer, data, result);
         }
     }
 

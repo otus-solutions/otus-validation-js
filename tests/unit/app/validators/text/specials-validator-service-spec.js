@@ -8,36 +8,47 @@ xdescribe('SpecialsValidatorService', function() {
         });
     });
 
+    it('should return true when answer is not given', function() {
+        var answer = {
+            'data': {}
+        };
+        var data = {
+            'reference': {}
+        };
+        var response = service.execute(answer, data);
+        expect(response.result).toEqual(true);
+    });
+    
     it('should be validate string alphanumeric if data.reference is true', function() {
-        var model = '@ $%¨ $%';
+        varanswer = '@ $%¨ $%';
 
         var data = {
             'reference': true
         };
 
-        var response = service.execute(model, data);
+        var response = service.execute(answer, data);
         expect(response.result).toEqual(true);
     });
 
     it('should be validate string alphanumeric if data.reference is true', function() {
-        var model = 'TESTE124@#';
+        varanswer = 'TESTE124@#';
 
         var data = {
             'reference': true
         };
 
-        var response = service.execute(model, data);
+        var response = service.execute(answer, data);
         expect(response.result).toEqual(false);
     });
 
     it('should be valid string alphanumeric if data.reference is false', function() {
-        var model = 'Teste124@#';
+        varanswer = 'Teste124@#';
 
         var data = {
             'reference': false
         };
 
-        var response = service.execute(model, data);
+        var response = service.execute(answer, data);
         expect(response.result).toEqual('Teste124@#');
     });
 });

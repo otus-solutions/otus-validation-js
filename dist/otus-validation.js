@@ -180,23 +180,23 @@
         var self = this;
         self.create = create;
 
-        function create(id, model) {
-            return new ElementRegister(id, model, ValidatorFactory, ValidationResponseFactory);
+        function create(id, answer) {
+            return new ElementRegister(id, answer, ValidatorFactory, ValidationResponseFactory);
         }
 
         return self;
     }
 
-    function ElementRegister(id, model, ValidatorFactory, ValidationResponseFactory) {
+    function ElementRegister(id, answer, ValidatorFactory, ValidationResponseFactory) {
         var self = this;
         self.id = id;
-        self.model = model;
+        self.answer = answer;
         self.validators = [];
         self.addValidator = addValidator;
         self.runAllValidators = runAllValidators;
 
         function addValidator(name, data) {
-            var validator = ValidatorFactory.create(name, data, self.model);
+            var validator = ValidatorFactory.create(name, data, self.answer);
             self.validators.push(validator);
         }
 
@@ -242,8 +242,6 @@
         function execute() {
             if (self.enable) {
                 var validationResponse = ValidationHubService.validators[self.name].execute(answer, self.data);
-                console.log(self.name);
-                console.log(validationResponse);
                 validationResponse.name = self.name;
 
                 return validationResponse;
@@ -267,10 +265,10 @@
         self.execute = execute;
 
         function execute(answer, reference) {
-            var formatedAnswer = new Date(answer.data);
-            var result = (new Date(reference.end) < formatedAnswer || formatedAnswer < new Date(reference.initial));
-            console.log('range result:');
-            console.log(result);
+            var formatedAnswer = new Date(answer.data).setHours(0,0,0,0);
+            var initialDate = new Date(reference.initial).setHours(0,0,0,0);
+            var endDate = new Date(reference.end).setHours(0,0,0,0);
+            var result = (endDate >= formatedAnswer && formatedAnswer >= initialDate);
             return ValidatorResponseFactory.create(answer, reference, result);
         }
     }
@@ -293,9 +291,11 @@
         function execute(answer, data) {
             var result;
             if (data.reference === true) {
-                result = (new Date(answer) > new Date());
+                var formatedAnswer = new Date(answer.data).setHours(0, 0, 0, 0);
+                var todayDate = new Date().setHours(0, 0, 0, 0);
+                result = (formatedAnswer >= todayDate);
             } else {
-                result=true;
+                result = true;
             }
             return ValidatorResponseFactory.create(answer, data, result);
         }
@@ -317,7 +317,9 @@
         self.execute = execute;
 
         function execute(answer, data) {
-            var result = (new Date(answer) <= new Date(data.reference));
+            var formatedAnswer = new Date(answer.data).setHours(0, 0, 0, 0);
+            var maxDate = new Date(data.reference).setHours(0, 0, 0, 0);
+            var result = (formatedAnswer <= maxDate);
             return ValidatorResponseFactory.create(answer, data, result);
         }
     }
@@ -337,9 +339,11 @@
         var self = this;
         self.execute = execute;
 
-        function execute(model, data) {
-            var result = (model >= data.reference);
-            return ValidatorResponseFactory.create(model, data, result);
+        function execute(answer, data) {
+            var formatedAnswer = new Date(answer.data).setHours(0, 0, 0, 0);
+            var maxDate = new Date(data.reference).setHours(0, 0, 0, 0);
+            var result = (formatedAnswer >= maxDate);
+            return ValidatorResponseFactory.create(answer, data, result);
         }
     }
 
@@ -358,14 +362,16 @@
         var self = this;
         self.execute = execute;
 
-        function execute(model, data) {
+        function execute(answer, data) {
             var result;
             if (data.reference === true) {
-                result = (model < new Date());
+                var formatedAnswer = new Date(answer.data).setHours(0, 0, 0, 0);
+                var todayDate = new Date().setHours(0, 0, 0, 0);
+                result = (formatedAnswer < todayDate);
             } else {
                 result = true;
             }
-            return ValidatorResponseFactory.create(model, data, result);
+            return ValidatorResponseFactory.create(answer, data, result);
         }
     }
 
@@ -384,9 +390,9 @@
         var self = this;
         self.execute = execute;
 
-        function execute(model, data) {
-            var result = (model != data.reference);
-            return ValidatorResponseFactory.create(model, data, result);
+        function execute(answer, data) {
+            var result = (answer.data != data.reference);
+            return ValidatorResponseFactory.create(answer, data, result);
 
         }
     }
@@ -407,8 +413,6 @@
         self.execute = execute;
 
         function execute(answer, data) {
-            console.log('mandatory');
-            console.log(answer.data);
             var result = (angular.equals(answer.data, {})) ? false : true;
             return ValidatorResponseFactory.create(answer, data, result);
         }
@@ -429,9 +433,9 @@
         var self = this;
         self.execute = execute;
 
-        function execute(model, data) {
-            var result = (data.initial < model && model < data.end);
-            return ValidatorResponseFactory.create(model, data, result);
+        function execute(answer, data) {
+            var result = (data.initial <= answer.data && answer.data <= data.end);
+            return ValidatorResponseFactory.create(answer, data, result);
 
         }
     }
@@ -451,9 +455,9 @@
         var self = this;
         self.execute = execute;
 
-        function execute(model, data) {
-            var result = (model > data.reference);
-            return ValidatorResponseFactory.create(model, data, result);
+        function execute(answer, data) {
+            var result = (answer.data >= data.reference);
+            return ValidatorResponseFactory.create(answer, data, result);
         }
     }
 
@@ -472,15 +476,15 @@
         var self = this;
         self.execute = execute;
 
-        function execute(model, data) {
+        function execute(answer, data) {
             var result;
 
-            if (data.reference === model.toString()) {
+            if (data.reference === answer.data.toString().length) {
                 result = true;
             } else {
                 result = false;
             }
-            return ValidatorResponseFactory.create(model, data, result);
+            return ValidatorResponseFactory.create(answer, data, result);
 
         }
     }
@@ -500,23 +504,18 @@
         var self = this;
         self.execute = execute;
 
-        function execute(model, data) {
+        function execute(answer, data) {
             var result;
-
-            if (data.reference === model.toString()) {
-                var comma = result.split('.');
-                if (comma[1] && comma[1].length === model) {
-                    result = true;
-                }
-            } else {
-                result = false;
+            var splitedAnswer = (answer.data.toString().split('.'));
+            if (splitedAnswer[1]) {
+                result = (data.reference === splitedAnswer[1].length);
             }
-
-            return ValidatorResponseFactory.create(model, data, result);
-
+            else{
+              result = false;
+            }
+            return ValidatorResponseFactory.create(answer, data, result);
         }
     }
-
 }());
 
 (function() {
@@ -532,9 +531,9 @@
         var self = this;
         self.execute = execute;
 
-        function execute(model, data) {
-            var result = (model < data.reference);
-            return ValidatorResponseFactory.create(model, data, result);
+        function execute(answer, data) {
+            var result = (answer.data <= data.reference);
+            return ValidatorResponseFactory.create(answer, data, result);
         }
     }
 
@@ -579,15 +578,15 @@
         var self = this;
         self.execute = execute;
 
-        function execute(model, data) {
+        function execute(answer, data) {
             var result;
 
             if (data.reference) {
-                result = model.toString().toLowerCase();
+                result = answer.data.toString().toLowerCase();
             } else {
-                result = model.toString();
+                result = answer.data.toString();
             }
-            return ValidatorResponseFactory.create(model, data, result);
+            return ValidatorResponseFactory.create(answer, data, result);
         }
     }
 
@@ -606,9 +605,9 @@
         var self = this;
         self.execute = execute;
 
-        function execute(model, data) {
-            var result = (model.length <= data.size);
-            return ValidatorResponseFactory.create(model, data, result);
+        function execute(answer, data) {
+            var result = (answer.data.length <= data.size);
+            return ValidatorResponseFactory.create(answer, data, result);
         }
     }
 
@@ -627,9 +626,9 @@
         var self = this;
         self.execute = execute;
 
-        function execute(model, data) {
-            var result = (model.length >= data.size);
-            return ValidatorResponseFactory.create(model, data, result);
+        function execute(answer, data) {
+            var result = (answer.data.length >= data.size);
+            return ValidatorResponseFactory.create(answer, data, result);
         }
     }
 
@@ -678,9 +677,9 @@
             var result;
 
             if (data.reference === true) {
-                result = answer.toString().toUpperCase();
+                result = answer.data.toString().toUpperCase();
             } else {
-                result = true;
+                result =  answer.data.toString();
             }
             return ValidatorResponseFactory.create(answer, data, result);
         }
@@ -701,9 +700,17 @@
         var self = this;
         self.execute = execute;
 
-        function execute(model, data) {
-            var result = (model <= data.reference);
-            return ValidatorResponseFactory.create(model, data, result);
+        function execute(answer, data) {
+            var formatedAnswer = new Date(answer.data);
+            formatedAnswer.setDate(1);
+            formatedAnswer.setMonth(0);
+            formatedAnswer.setFullYear(1970);
+            var formatedReference = new Date(data.reference);
+            formatedReference.setDate(1);
+            formatedReference.setMonth(0);
+            formatedReference.setFullYear(1970);
+            var result = (formatedAnswer <= formatedReference);
+            return ValidatorResponseFactory.create(answer, data, result);
         }
     }
 
@@ -722,9 +729,17 @@
         var self = this;
         self.execute = execute;
 
-        function execute(model, data) {
-            var result = (model >= data.reference);
-            return ValidatorResponseFactory.create(model, data, result);
+        function execute(answer, data) {
+            var formatedAnswer = new Date(answer.data);
+            formatedAnswer.setDate(1);
+            formatedAnswer.setMonth(0);
+            formatedAnswer.setFullYear(1970);
+            var formatedReference = new Date(data.reference);
+            formatedReference.setDate(1);
+            formatedReference.setMonth(0);
+            formatedReference.setFullYear(1970);
+            var result = (formatedAnswer >= formatedReference);
+            return ValidatorResponseFactory.create(answer, data, result);
         }
     }
 

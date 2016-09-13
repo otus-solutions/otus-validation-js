@@ -8,6 +8,17 @@ describe('MaxTimeValidatorService', function() {
         });
     });
 
+    it('should return true when answer is not given', function() {
+        var answer = {
+            'data': {}
+        };
+        var data = {
+            'reference': {}
+        };
+        var response = service.execute(answer, data);
+        expect(response.result).toEqual(true);
+    });
+
     it('should be return true response when answer value is below reference (regardless the day)', function() {
         var answer = {'data':'Thu Jan 01 1970 01:00:00 GMT-0300 (BRT)'};
         var data = {
@@ -18,13 +29,23 @@ describe('MaxTimeValidatorService', function() {
         expect(response.result).toBe(true);
     });
 
-    xit('should be return false response when answer value is not below reference (regardless the day)', function() {
-        var answer = 'Mon Sep 12 2016 05:00:00 GMT-0300 (BRT)';
+    it('should be return false response when answer value is not below reference (regardless the day)', function() {
+        var answer = {'data':'Mon Sep 12 2016 05:00:00 GMT-0300 (BRT)'};
         var data = {
             'reference': 'Thu Jan 01 1970 04:00:00 GMT-0300 (BRT)'
         };
 
         var response = service.execute(answer, data);
         expect(response.result).toBe(false);
+    });
+
+    it('should be return true response when answer value is equal to reference (regardless the day)', function() {
+        var answer = {'data':'Mon Sep 12 2016 05:00:00 GMT-0300 (BRT)'};
+        var data = {
+            'reference': 'Thu Jan 01 1970 05:00:00 GMT-0300 (BRT)'
+        };
+
+        var response = service.execute(answer, data);
+        expect(response.result).toBe(true);
     });
 });

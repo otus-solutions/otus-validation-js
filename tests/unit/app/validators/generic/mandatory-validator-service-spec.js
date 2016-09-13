@@ -1,6 +1,6 @@
 describe('MandatoryValidatorService', function() {
 
-    var data = {};
+    var data = {'reference':{}};
     beforeEach(function() {
         module('otus.validation');
 
@@ -19,7 +19,7 @@ describe('MandatoryValidatorService', function() {
     });
 
     it('should return false response when answer is not given (Object)', function() {
-        var answer = {};
+        var answer = {'data':{}};
 
         var response = service.execute(answer, data);
         expect(response.result).toEqual(false);

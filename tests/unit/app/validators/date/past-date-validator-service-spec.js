@@ -8,6 +8,16 @@ describe('PastDateValidatorService', function() {
         });
     });
 
+    it('should return true when answer is not given', function() {
+        var answer = {
+            'data': {}
+        }; //mm/dd/yyyy
+        var data = {'reference':{}};
+        var response = service.execute(answer, data);
+        expect(response.result).toEqual(true);
+    });
+
+
     it('should return true when reference equals to false', function() {
         var answer = {
             'data': '1/1/2016'
@@ -22,7 +32,7 @@ describe('PastDateValidatorService', function() {
 
     it('should return false when value is not in past', function() {
         var answer = {
-            'data': new Date().toLocaleString()
+            'data': new Date()
         };
         var data = {
             'reference': true
@@ -43,4 +53,18 @@ describe('PastDateValidatorService', function() {
         var response = service.execute(answer, data);
         expect(response.result).toEqual(true);
     });
+
+    it('should return true when validator is not enabled', function() {
+        var answer = {
+            'data': '01/01/2020'
+        };
+        var data = {
+            'reference': false
+        };
+
+        var response = service.execute(answer, data);
+        expect(response.result).toEqual(true);
+    });
+
+
 });

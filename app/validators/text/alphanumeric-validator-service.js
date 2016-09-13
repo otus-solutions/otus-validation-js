@@ -12,6 +12,9 @@
         self.execute = execute;
 
         function execute(model, data) {
+            if (angular.equals(answer.data, {})) {
+                return ValidatorResponseFactory.create(answer, data, true);
+            }
             var result;
 
             if (data.reference === true) {

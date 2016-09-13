@@ -12,7 +12,7 @@
         self.execute = execute;
 
         function execute(answer, data) {
-            var result = (angular.equals(answer, {})) ? false : true;
+            var result = (angular.equals(answer.data, {})) ? false : true;
             return ValidatorResponseFactory.create(answer, data, result);
         }
     }
