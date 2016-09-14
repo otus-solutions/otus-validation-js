@@ -271,8 +271,8 @@
             }
 
             var formatedAnswer = new Date(answer.data).setHours(0, 0, 0, 0);
-            var initialDate = new Date(data.initial).setHours(0, 0, 0, 0);
-            var endDate = new Date(data.end).setHours(0, 0, 0, 0);
+            var initialDate = new Date(data.reference.initial).setHours(0, 0, 0, 0);
+            var endDate = new Date(data.reference.end).setHours(0, 0, 0, 0);
             var result = (endDate >= formatedAnswer && formatedAnswer >= initialDate);
             return ValidatorResponseFactory.create(answer, data, result);
         }
@@ -392,7 +392,7 @@
             if (data.reference === true) {
                 var formatedAnswer = new Date(answer.data).setHours(0, 0, 0, 0);
                 var todayDate = new Date().setHours(0, 0, 0, 0);
-                result = (formatedAnswer < todayDate);
+                result = (formatedAnswer <= todayDate);
             } else {
                 result = true;
             }

@@ -12,7 +12,11 @@ describe('DateInValidatorService', function() {
         var answer = {
             'data': {}
         }; //mm/dd/yyyy
-        var data = {'reference':{}};
+        var data = {
+            'reference': {
+                'reference': {}
+            }
+        };
         var response = service.execute(answer, data);
         expect(response.result).toEqual(true);
     });
@@ -22,8 +26,10 @@ describe('DateInValidatorService', function() {
             'data': '01/11/2016'
         }; //mm/dd/yyyy
         var data = {
-            'initial': '01/01/2016',
-            'end': '02/01/2016'
+            'reference': {
+                'initial': '01/01/2016',
+                'end': '02/01/2016'
+            }
         };
         var response = service.execute(answer, data);
         expect(response.result).toEqual(true);
@@ -34,8 +40,10 @@ describe('DateInValidatorService', function() {
             'data': new Date(2016, 2, 20)
         };
         var data = {
-            'initial': new Date(2016, 1, 1),
-            'end': new Date(2016, 2, 1)
+            'reference': {
+                'initial': new Date(2016, 1, 1),
+                'end': new Date(2016, 2, 1)
+            }
         };
 
         var response = service.execute(answer, data);
@@ -47,8 +55,10 @@ describe('DateInValidatorService', function() {
             'data': '01/01/2016'
         }; //mm/dd/yyyy
         var data = {
-            'initial': '01/01/2016',
-            'end': '02/01/2016'
+            'reference': {
+                'initial': '01/01/2016',
+                'end': '02/01/2016'
+            }
         };
         var response = service.execute(answer, data);
         expect(response.result).toEqual(true);
@@ -59,8 +69,10 @@ describe('DateInValidatorService', function() {
             'data': '02/01/2016'
         }; //mm/dd/yyyy
         var data = {
-            'initial': '01/01/2016',
-            'end': '02/01/2016'
+            'reference': {
+                'initial': '01/01/2016',
+                'end': '02/01/2016'
+            }
         };
         var response = service.execute(answer, data);
         expect(response.result).toEqual(true);

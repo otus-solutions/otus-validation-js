@@ -19,7 +19,7 @@
             if (data.reference === true) {
                 var formatedAnswer = new Date(answer.data).setHours(0, 0, 0, 0);
                 var todayDate = new Date().setHours(0, 0, 0, 0);
-                result = (formatedAnswer < todayDate);
+                result = (formatedAnswer <= todayDate);
             } else {
                 result = true;
             }

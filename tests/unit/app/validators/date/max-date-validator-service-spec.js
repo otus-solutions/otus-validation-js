@@ -12,7 +12,9 @@ describe('MaxDateValidatorService', function() {
         var answer = {
             'data': {}
         }; //mm/dd/yyyy
-        var data = {'reference':{}};
+        var data = {
+            'reference': {}
+        };
         var response = service.execute(answer, data);
         expect(response.result).toEqual(true);
     });

@@ -29,6 +29,18 @@ describe('FutureDateValidatorService', function() {
         expect(response.result).toEqual(true);
     });
 
+    it('should return true response when answer current day', function() {
+        var answer = {
+            'data': new Date().toString()
+        };
+        var data = {
+            'reference': true
+        };
+
+        var response = service.execute(answer, data);
+        expect(response.result).toEqual(true);
+    });
+
     it('should return false when answer value is not future', function() {
         var answer = {
             'data': '01/01/2000'

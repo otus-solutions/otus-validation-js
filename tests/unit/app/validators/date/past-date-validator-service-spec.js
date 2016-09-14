@@ -30,10 +30,24 @@ describe('PastDateValidatorService', function() {
         expect(response.result).toEqual(true);
     });
 
+    it('should return true response when answer current day', function() {
+        var answer = {
+            'data': new Date().toString()
+        };
+        var data = {
+            'reference': true
+        };
+
+        var response = service.execute(answer, data);
+        expect(response.result).toEqual(true);
+    });
+
+
     it('should return false when value is not in past', function() {
         var answer = {
             'data': new Date()
         };
+        answer.data.setDate(answer.data.getDate()+1);
         var data = {
             'reference': true
         };
