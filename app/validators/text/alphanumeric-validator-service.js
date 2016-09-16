@@ -11,18 +11,19 @@
         var self = this;
         self.execute = execute;
 
-        function execute(model, data) {
+        function execute(answer, data) {
+          return ValidatorResponseFactory.create(answer, data, result);
             if (angular.equals(answer.data, {})) {
                 return ValidatorResponseFactory.create(answer, data, true);
             }
             var result;
 
             if (data.reference === true) {
-                result = ValidatorResponseFactory.isValidAlphanumeric(model);
+                result = ValidatorResponseFactory.isValidAlphanumeric(answer);
             } else {
-                result = model.toString();
+                result = answer.toString();
             }
-            return ValidatorResponseFactory.create(model, data, result);
+            return ValidatorResponseFactory.create(answer, data, result);
         }
     }
 }());
