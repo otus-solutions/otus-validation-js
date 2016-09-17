@@ -53,7 +53,7 @@
         function validateAllElements(callback) {
             var response = [];
             var allElements = ValidationPoolService.fetchAll();
-
+            console.log(allElements);
             allElements.forEach(function(element, index, array) {
                 element.runAllValidators(function(responseElement) {
                     response.push(responseElement);
@@ -465,7 +465,7 @@
             if (angular.equals(answer.data, {})) {
                 return ValidatorResponseFactory.create(answer, data, true);
             }
-            var result = (data.initial <= answer.data && answer.data <= data.end);
+            var result = (data.reference.initial <= answer.data && answer.data <= data.reference.end);
             return ValidatorResponseFactory.create(answer, data, result);
 
         }
@@ -597,18 +597,7 @@
         self.execute = execute;
 
         function execute(answer, data) {
-          return ValidatorResponseFactory.create(answer, data, result);
-            if (angular.equals(answer.data, {})) {
-                return ValidatorResponseFactory.create(answer, data, true);
-            }
-            var result;
-
-            if (data.reference === true) {
-                result = ValidatorResponseFactory.isValidAlphanumeric(answer);
-            } else {
-                result = answer.toString();
-            }
-            return ValidatorResponseFactory.create(answer, data, result);
+            return ValidatorResponseFactory.create(answer, data, true);
         }
     }
 }());
@@ -660,8 +649,8 @@
         function execute(answer, data) {
             if (angular.equals(answer.data, {})) {
                 return ValidatorResponseFactory.create(answer, data, true);
-            }
-            var result = (answer.data.length <= data.size);
+            }            
+            var result = (answer.data.length <= data.reference);
             return ValidatorResponseFactory.create(answer, data, result);
         }
     }
@@ -685,7 +674,7 @@
             if (angular.equals(answer.data, {})) {
                 return ValidatorResponseFactory.create(answer, data, true);
             }
-            var result = (answer.data.length >= data.size);
+            var result = (answer.data.length >= data.reference);
             return ValidatorResponseFactory.create(answer, data, result);
         }
     }
@@ -706,19 +695,7 @@
         self.execute = execute;
 
         function execute(answer, data) {
-          return ValidatorResponseFactory.create(answer, data, result);
-
-            if (angular.equals(answer.data, {})) {
-                return ValidatorResponseFactory.create(answer, data, true);
-            }
-            var result;
-
-            if (data.reference === true) {
-                result = ValidatorResponseFactory.isValidSpecials(answer);
-            } else {
-                result = true;
-            }
-            return ValidatorResponseFactory.create(answer, data, result);
+            return ValidatorResponseFactory.create(answer, data, true);
         }
     }
 }());
@@ -737,19 +714,7 @@
         self.execute = execute;
 
         function execute(answer, data) {
-          return ValidatorResponseFactory.create(answer, data, result);
-
-            if (angular.equals(answer.data, {})) {
-                return ValidatorResponseFactory.create(answer, data, true);
-            }
-            var result;
-
-            if (data.reference === true) {
-                result = answer.data.toString().toUpperCase();
-            } else {
-                result = answer.data.toString();
-            }
-            return ValidatorResponseFactory.create(answer, data, result);
+          return ValidatorResponseFactory.create(answer, data, true);
         }
     }
 

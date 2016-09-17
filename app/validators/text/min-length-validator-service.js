@@ -15,7 +15,7 @@
             if (angular.equals(answer.data, {})) {
                 return ValidatorResponseFactory.create(answer, data, true);
             }
-            var result = (answer.data.length >= data.size);
+            var result = (answer.data.length >= data.reference);
             return ValidatorResponseFactory.create(answer, data, result);
         }
     }

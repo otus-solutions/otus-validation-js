@@ -46,7 +46,7 @@
         function validateAllElements(callback) {
             var response = [];
             var allElements = ValidationPoolService.fetchAll();
-
+            console.log(allElements);
             allElements.forEach(function(element, index, array) {
                 element.runAllValidators(function(responseElement) {
                     response.push(responseElement);

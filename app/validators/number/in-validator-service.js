@@ -15,7 +15,7 @@
             if (angular.equals(answer.data, {})) {
                 return ValidatorResponseFactory.create(answer, data, true);
             }
-            var result = (data.initial <= answer.data && answer.data <= data.end);
+            var result = (data.reference.initial <= answer.data && answer.data <= data.reference.end);
             return ValidatorResponseFactory.create(answer, data, result);
 
         }

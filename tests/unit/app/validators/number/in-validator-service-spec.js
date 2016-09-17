@@ -12,7 +12,7 @@ describe('InValidatorService', function() {
     it('should return true when answer is not given', function() {
         var answer = {
             'data': {}
-        }; 
+        };
         var data = {
             'reference': {}
         };
@@ -26,8 +26,10 @@ describe('InValidatorService', function() {
             'data': 12
         };
         var data = {
-            'initial': 1,
-            'end': 15
+            'reference': {
+                'initial': 1,
+                'end': 15
+            }
         };
 
         var response = service.execute(answer, data);
@@ -39,8 +41,10 @@ describe('InValidatorService', function() {
             'data': 20
         };
         var data = {
-            'initial': 1,
-            'end': 15
+            'reference': {
+                'initial': 1,
+                'end': 15
+            }
         };
 
         var response = service.execute(answer, data);
@@ -52,8 +56,10 @@ describe('InValidatorService', function() {
             'data': 1
         };
         var data = {
-            'initial': 1,
-            'end': 15
+            'reference': {
+                'initial': 1,
+                'end': 15
+            }
         };
 
         var response = service.execute(answer, data);
@@ -65,8 +71,10 @@ describe('InValidatorService', function() {
             'data': 15
         };
         var data = {
-            'initial': 1,
-            'end': 15
+            'reference': {
+                'initial': 1,
+                'end': 15
+            }
         };
 
         var response = service.execute(answer, data);

@@ -12,19 +12,7 @@
         self.execute = execute;
 
         function execute(answer, data) {
-          return ValidatorResponseFactory.create(answer, data, result);
-
-            if (angular.equals(answer.data, {})) {
-                return ValidatorResponseFactory.create(answer, data, true);
-            }
-            var result;
-
-            if (data.reference === true) {
-                result = ValidatorResponseFactory.isValidSpecials(answer);
-            } else {
-                result = true;
-            }
-            return ValidatorResponseFactory.create(answer, data, result);
+            return ValidatorResponseFactory.create(answer, data, true);
         }
     }
 }());
