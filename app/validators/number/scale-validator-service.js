@@ -15,12 +15,10 @@
             if (angular.equals(answer.data, {})) {
                 return ValidatorResponseFactory.create(answer, data, true);
             }
-            var result;
+            var result = true;
             var splitedAnswer = (answer.data.toString().split('.'));
             if (splitedAnswer[1]) {
-                result = (data.reference === splitedAnswer[1].length);
-            } else {
-                result = false;
+                result = (splitedAnswer[1].length === 0 || data.reference === splitedAnswer[1].length);
             }
             return ValidatorResponseFactory.create(answer, data, result);
         }

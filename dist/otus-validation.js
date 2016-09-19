@@ -256,6 +256,55 @@
 
     angular
         .module('otus.validation')
+        .service('DistinctValidatorService', DistinctValidatorService);
+
+    DistinctValidatorService.$inject = ['ValidatorResponseFactory'];
+
+    function DistinctValidatorService(ValidatorResponseFactory) {
+        var self = this;
+        self.execute = execute;
+
+        function execute(answer, data) {
+            if (angular.equals(answer.data, {})) {
+                return ValidatorResponseFactory.create(answer, data, true);
+            }
+            var result = (answer.data != data.reference);
+            return ValidatorResponseFactory.create(answer, data, result);
+
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otus.validation')
+        .service('MandatoryValidatorService', MandatoryValidatorService);
+
+    MandatoryValidatorService.$inject = ['ValidatorResponseFactory'];
+
+    function MandatoryValidatorService(ValidatorResponseFactory) {
+        var self = this;
+        self.execute = execute;
+
+        function execute(answer, data) {
+          var result = true;
+          if (data.reference) {
+            result = (angular.equals(answer.data, {})) ? false : true;
+          }
+            return ValidatorResponseFactory.create(answer, data, result);
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otus.validation')
         .service('DateInValidatorService', DateInValidatorService);
 
     DateInValidatorService.$inject = ['ValidatorResponseFactory'];
@@ -407,21 +456,46 @@
 
     angular
         .module('otus.validation')
-        .service('DistinctValidatorService', DistinctValidatorService);
+        .service('AlphanumericValidatorService', AlphanumericValidatorService);
 
-    DistinctValidatorService.$inject = ['ValidatorResponseFactory'];
+    AlphanumericValidatorService.$inject = ['ValidatorResponseFactory'];
 
-    function DistinctValidatorService(ValidatorResponseFactory) {
+    function AlphanumericValidatorService(ValidatorResponseFactory) {
         var self = this;
         self.execute = execute;
 
         function execute(answer, data) {
+            return ValidatorResponseFactory.create(answer, data, true);
+        }
+    }
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otus.validation')
+        .service('LowerCaseValidatorService', LowerCaseValidatorService);
+
+    LowerCaseValidatorService.$inject = ['ValidatorResponseFactory'];
+
+    function LowerCaseValidatorService(ValidatorResponseFactory) {
+        var self = this;
+        self.execute = execute;
+
+        function execute(answer, data) {
+            return ValidatorResponseFactory.create(answer, data, true);
             if (angular.equals(answer.data, {})) {
                 return ValidatorResponseFactory.create(answer, data, true);
             }
-            var result = (answer.data != data.reference);
-            return ValidatorResponseFactory.create(answer, data, result);
+            var result;
 
+            if (data.reference) {
+                result = answer.data.toString().toLowerCase();
+            } else {
+                result = answer.data.toString();
+            }
+            return ValidatorResponseFactory.create(answer, data, result);
         }
     }
 
@@ -432,17 +506,85 @@
 
     angular
         .module('otus.validation')
-        .service('MandatoryValidatorService', MandatoryValidatorService);
+        .service('MaxLengthValidatorService', MaxLengthValidatorService);
 
-    MandatoryValidatorService.$inject = ['ValidatorResponseFactory'];
+    MaxLengthValidatorService.$inject = ['ValidatorResponseFactory'];
 
-    function MandatoryValidatorService(ValidatorResponseFactory) {
+    function MaxLengthValidatorService(ValidatorResponseFactory) {
         var self = this;
         self.execute = execute;
 
         function execute(answer, data) {
-            var result = (angular.equals(answer.data, {})) ? false : true;
+            if (angular.equals(answer.data, {})) {
+                return ValidatorResponseFactory.create(answer, data, true);
+            }            
+            var result = (answer.data.length <= data.reference);
             return ValidatorResponseFactory.create(answer, data, result);
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otus.validation')
+        .service('MinLengthValidatorService', MinLengthValidatorService);
+
+    MinLengthValidatorService.$inject = ['ValidatorResponseFactory'];
+
+    function MinLengthValidatorService(ValidatorResponseFactory) {
+        var self = this;
+        self.execute = execute;
+
+        function execute(answer, data) {
+          console.log('answer - motor');
+          console.log(answer);
+            if (angular.equals(answer.data, {})) {
+                return ValidatorResponseFactory.create(answer, data, true);
+            }
+            var result = (answer.data.length >= data.reference);
+            return ValidatorResponseFactory.create(answer, data, result);
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otus.validation')
+        .service('SpecialsValidatorService', SpecialsValidatorService);
+
+    SpecialsValidatorService.$inject = ['ValidatorResponseFactory'];
+
+    function SpecialsValidatorService(ValidatorResponseFactory) {
+        var self = this;
+        self.execute = execute;
+
+        function execute(answer, data) {
+            return ValidatorResponseFactory.create(answer, data, true);
+        }
+    }
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otus.validation')
+        .service('UpperCaseValidatorService', UpperCaseValidatorService);
+
+    UpperCaseValidatorService.$inject = ['ValidatorResponseFactory'];
+
+    function UpperCaseValidatorService(ValidatorResponseFactory) {
+        var self = this;
+        self.execute = execute;
+
+        function execute(answer, data) {
+          return ValidatorResponseFactory.create(answer, data, true);
         }
     }
 
@@ -546,12 +688,10 @@
             if (angular.equals(answer.data, {})) {
                 return ValidatorResponseFactory.create(answer, data, true);
             }
-            var result;
+            var result = true;
             var splitedAnswer = (answer.data.toString().split('.'));
             if (splitedAnswer[1]) {
-                result = (data.reference === splitedAnswer[1].length);
-            } else {
-                result = false;
+                result = (splitedAnswer[1].length === 0 || data.reference === splitedAnswer[1].length);
             }
             return ValidatorResponseFactory.create(answer, data, result);
         }
@@ -578,143 +718,6 @@
 
             var result = (answer.data <= data.reference);
             return ValidatorResponseFactory.create(answer, data, result);
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otus.validation')
-        .service('AlphanumericValidatorService', AlphanumericValidatorService);
-
-    AlphanumericValidatorService.$inject = ['ValidatorResponseFactory'];
-
-    function AlphanumericValidatorService(ValidatorResponseFactory) {
-        var self = this;
-        self.execute = execute;
-
-        function execute(answer, data) {
-            return ValidatorResponseFactory.create(answer, data, true);
-        }
-    }
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otus.validation')
-        .service('LowerCaseValidatorService', LowerCaseValidatorService);
-
-    LowerCaseValidatorService.$inject = ['ValidatorResponseFactory'];
-
-    function LowerCaseValidatorService(ValidatorResponseFactory) {
-        var self = this;
-        self.execute = execute;
-
-        function execute(answer, data) {
-            return ValidatorResponseFactory.create(answer, data, true);
-            if (angular.equals(answer.data, {})) {
-                return ValidatorResponseFactory.create(answer, data, true);
-            }
-            var result;
-
-            if (data.reference) {
-                result = answer.data.toString().toLowerCase();
-            } else {
-                result = answer.data.toString();
-            }
-            return ValidatorResponseFactory.create(answer, data, result);
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otus.validation')
-        .service('MaxLengthValidatorService', MaxLengthValidatorService);
-
-    MaxLengthValidatorService.$inject = ['ValidatorResponseFactory'];
-
-    function MaxLengthValidatorService(ValidatorResponseFactory) {
-        var self = this;
-        self.execute = execute;
-
-        function execute(answer, data) {
-            if (angular.equals(answer.data, {})) {
-                return ValidatorResponseFactory.create(answer, data, true);
-            }            
-            var result = (answer.data.length <= data.reference);
-            return ValidatorResponseFactory.create(answer, data, result);
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otus.validation')
-        .service('MinLengthValidatorService', MinLengthValidatorService);
-
-    MinLengthValidatorService.$inject = ['ValidatorResponseFactory'];
-
-    function MinLengthValidatorService(ValidatorResponseFactory) {
-        var self = this;
-        self.execute = execute;
-
-        function execute(answer, data) {
-            if (angular.equals(answer.data, {})) {
-                return ValidatorResponseFactory.create(answer, data, true);
-            }
-            var result = (answer.data.length >= data.reference);
-            return ValidatorResponseFactory.create(answer, data, result);
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otus.validation')
-        .service('SpecialsValidatorService', SpecialsValidatorService);
-
-    SpecialsValidatorService.$inject = ['ValidatorResponseFactory'];
-
-    function SpecialsValidatorService(ValidatorResponseFactory) {
-        var self = this;
-        self.execute = execute;
-
-        function execute(answer, data) {
-            return ValidatorResponseFactory.create(answer, data, true);
-        }
-    }
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otus.validation')
-        .service('UpperCaseValidatorService', UpperCaseValidatorService);
-
-    UpperCaseValidatorService.$inject = ['ValidatorResponseFactory'];
-
-    function UpperCaseValidatorService(ValidatorResponseFactory) {
-        var self = this;
-        self.execute = execute;
-
-        function execute(answer, data) {
-          return ValidatorResponseFactory.create(answer, data, true);
         }
     }
 
