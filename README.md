@@ -26,7 +26,7 @@ Package.json:
 ### Utilização
 
 ```javascript
-                var elementRegister = ElementRegisterFactory.create('IDENTIFICADOR', model);
+                var elementRegister = ElementRegisterFactory.create('IDENTIFICADOR', answerReference);
 
                 elementRegister.addValidator('upper-limit', {'reference': 10});
                 elementRegister.addValidator('distinct', {'reference': 10});
@@ -66,7 +66,7 @@ Package.json:
 * Value: mandatory
 * Aplicação:
 ```javascript
-                elementRegister.addValidator('mandatory', {});
+                elementRegister.addValidator('mandatory', {'reference': true});
 ```
 
 * Name: Distinct
@@ -81,7 +81,7 @@ Package.json:
 * Value: in
 * Aplicação:
 ```javascript
-                elementRegister.addValidator('in', {'initial' : 1, 'end' : 10});
+                elementRegister.addValidator('in', {'reference': {'initial' : 1, 'end' : 10}});
 ```
 
 * Name: Lower Limit
@@ -121,7 +121,7 @@ Package.json:
 * Value: date-in
 * Aplicação:
 ```javascript
-                elementRegister.addValidator('date-in', {'initial' : new Date(2016,1,1), 'end' : new Date(2017,1,1)});
+                elementRegister.addValidator('range-date', {'reference:{'initial' : new Date(2016,1,1), 'end' : new Date(2017,1,1)}});
 ```
 
 * Name: Max Date
@@ -145,7 +145,7 @@ Package.json:
 * Value: past-date
 * Aplicação:
 ```javascript
-                elementRegister.addValidator('past-date', {});
+                elementRegister.addValidator('past-date', {'reference': true});
 ```
 
 * Name: Future Date
@@ -153,7 +153,7 @@ Package.json:
 * Value: future-date
 * Aplicação:
 ```javascript
-                elementRegister.addValidator('future-date', {});
+                elementRegister.addValidator('future-date', {'reference': true});
 ```
 
 * Name: Min Length
@@ -161,7 +161,7 @@ Package.json:
 * Value: min-length
 * Aplicação:
 ```javascript
-                elementRegister.addValidator('min-length', {'size' : 1});
+                elementRegister.addValidator('min-length', {'reference' : 1});
 ```
 
 * Name: Max Length
@@ -169,7 +169,7 @@ Package.json:
 * Value: max-length
 * Aplicação:
 ```javascript
-                elementRegister.addValidator('max-length', {'size' : 150});
+                elementRegister.addValidator('max-length', {'reference' : 150});
 ```
 
 * Name: Alphanumeric
@@ -177,7 +177,7 @@ Package.json:
 * Value: alphanumeric
 * Aplicação:
 ```javascript
-                elementRegister.addValidator('alphanumeric', {});
+                elementRegister.addValidator('alphanumeric', {'reference': true});
 ```
 
 * Name: Lower Case
@@ -185,7 +185,7 @@ Package.json:
 * Value: lower-Case
 * Aplicação:
 ```javascript
-                elementRegister.addValidator('lower-case', {});
+                elementRegister.addValidator('lower-case', {'reference': true});
 ```
 
 * Name: Specials
@@ -193,7 +193,7 @@ Package.json:
 * Value: Specials
 * Aplicação:
 ```javascript
-                elementRegister.addValidator('specials', {});
+                elementRegister.addValidator('specials', {'reference': true});
 ```
 
 * Name: Upper Case
@@ -201,7 +201,7 @@ Package.json:
 * Value: upper-case
 * Aplicação:
 ```javascript
-                elementRegister.addValidator('upper-case', {});
+                elementRegister.addValidator('upper-case', {'reference': true});
 ```
 
 * Name: Max Time
