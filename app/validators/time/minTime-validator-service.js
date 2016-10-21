@@ -15,16 +15,17 @@
             if (angular.equals(answer.data, {})) {
                 return ValidatorResponseFactory.create(answer, data, true);
             }
-            var formatedAnswer = new Date(answer.data);
-            formatedAnswer.setDate(1);
-            formatedAnswer.setMonth(0);
-            formatedAnswer.setFullYear(1970);
-            var formatedReference = new Date(data.reference);
-            formatedReference.setDate(1);
-            formatedReference.setMonth(0);
-            formatedReference.setFullYear(1970);
-            var result = (formatedAnswer >= formatedReference);
+            var result = _compareTime(answer.data, data.reference);
             return ValidatorResponseFactory.create(answer, data, result);
+        }
+
+        function _compareTime(answer, reference) {
+            var formatedAnswer = String(answer).match(/([01]\d|2[0-3]):([0-5]\d):([0-5]\d)/);
+            var formatedReference = String(reference).match(/([01]\d|2[0-3]):([0-5]\d):([0-5]\d)/);
+            var date = new Date();
+            var dateAnswer = new Date(date.getFullYear(), date.getMonth(), date.getDate(), Number(formatedAnswer[1]), Number(formatedAnswer[2]), Number(formatedAnswer[3]));
+            var dateReference = new Date(date.getFullYear(), date.getMonth(), date.getDate(), Number(formatedReference[1]), Number(formatedReference[2]), Number(formatedReference[3]));
+            return dateAnswer >= dateReference;
         }
     }
 
