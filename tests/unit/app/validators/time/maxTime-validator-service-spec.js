@@ -47,7 +47,7 @@ describe('MaxTimeValidatorService', function() {
         expect(response.result).toBe(false);
     });
 
-    fit('should be return true response when answer value is equal to reference (regardless the day)', function() {
+    it('should be return true response when answer value is equal to reference (regardless the day)', function() {
         var answer = {
             'data': 'Mon Sep 12 2016 05:00:00 GMT-0300 (BRT)'
         };
