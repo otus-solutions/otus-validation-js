@@ -5,6 +5,8 @@ describe('MinTimeValidatorService', function() {
     beforeEach(function() {
         module('otus.validation');
 
+        mock();
+
         inject(function(_$injector_) {
             service = _$injector_.get('MinTimeValidatorService');
         });
@@ -59,17 +61,33 @@ describe('MinTimeValidatorService', function() {
 
     xdescribe('_compareTime method', function() {
         it('should return true or false', function() {
-            var result = service._compareTime(Mock.answer.data, Mock.data.reference);
+            var result = service._compareTime(Mock.answer1.data, Mock.data1.reference);
 
             expect(result).toEqual(jasmine.any(Boolean));
+        });
+
+        it('should return true when answer value is above reference', function() {
+            var result = service._compareTime(Mock.answer1.data, Mock.data1.reference);
+
+            expect(result).toEqual(true);
+        });
+
+        it('should return false when answer value is below reference', function() {
+            var result = service._compareTime(Mock.answer2.data, Mock.data2.reference);
+
+            expect(result).toEqual(false);
         });
     });
 
     function mock() {
-        Mock.answer = {};
-        Mock.answer.data = 'Mon Sep 12 2016 05:00:00 GMT-0300 (BRT)';
-        Mock.data = {};
-        Mock.data.reference = 'Thu Jan 01 1970 05:00:00 GMT-0300 (BRT)';
-    }
+        Mock.answer1 = {};
+        Mock.answer1.data = 'Mon Sep 12 2016 05:00:00 GMT-0300 (BRT)';
+        Mock.data1 = {};
+        Mock.data1.reference = 'Thu Jan 01 1970 05:00:00 GMT-0300 (BRT)';
 
+        Mock.answer2 = {};
+        Mock.answer2.data = 'Thu Jan 01 1970 01:00:00 GMT-0300 (BRT)';
+        Mock.data2 = {};
+        Mock.data2.reference = 'Mon Sep 12 2016 04:00:00 GMT-0300 (BRT)';
+    }
 });
