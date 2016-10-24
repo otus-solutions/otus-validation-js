@@ -25,31 +25,37 @@ describe('ValidationHubService', function() {
                 'upperCase': _$injector_.get('UpperCaseValidatorService'),
                 'maxTime': _$injector_.get('MaxTimeValidatorService'),
                 'minTime': _$injector_.get('MinTimeValidatorService'),
+                'minSelected': _$injector_.get('MinSelectedValidatorService'),
+                'maxSelected': _$injector_.get('MaxSelectedValidatorService'),
+                'quantity': _$injector_.get('QuantityValidatorService'),
             });
         });
     });
 
     it('should must have all available validatores', function() {
-        expect(service.validators['mandatory']).not.toBeUndefined();
-        expect(service.validators['distinct']).not.toBeUndefined();
-        expect(service.validators['futureDate']).not.toBeUndefined();
-        expect(service.validators['rangeDate']).not.toBeUndefined();
-        expect(service.validators['lowerLimit']).not.toBeUndefined();
-        expect(service.validators['maxDate']).not.toBeUndefined();
-        expect(service.validators['maxLength']).not.toBeUndefined();
-        expect(service.validators['minDate']).not.toBeUndefined();
-        expect(service.validators['minLength']).not.toBeUndefined();
-        expect(service.validators['pastDate']).not.toBeUndefined();
-        expect(service.validators['upperLimit']).not.toBeUndefined();
-        expect(service.validators['in']).not.toBeUndefined();
-        expect(service.validators['precision']).not.toBeUndefined();
-        expect(service.validators['scale']).not.toBeUndefined();
-        expect(service.validators['alphanumeric']).not.toBeUndefined();
-        expect(service.validators['lowerCase']).not.toBeUndefined();
-        expect(service.validators['specials']).not.toBeUndefined();
-        expect(service.validators['upperCase']).not.toBeUndefined();
-        expect(service.validators['maxTime']).not.toBeUndefined();
-        expect(service.validators['minTime']).not.toBeUndefined();
+        expect(service.validators['mandatory']).toBeDefined();
+        expect(service.validators['distinct']).toBeDefined();
+        expect(service.validators['futureDate']).toBeDefined();
+        expect(service.validators['rangeDate']).toBeDefined();
+        expect(service.validators['lowerLimit']).toBeDefined();
+        expect(service.validators['maxDate']).toBeDefined();
+        expect(service.validators['maxLength']).toBeDefined();
+        expect(service.validators['minDate']).toBeDefined();
+        expect(service.validators['minLength']).toBeDefined();
+        expect(service.validators['pastDate']).toBeDefined();
+        expect(service.validators['upperLimit']).toBeDefined();
+        expect(service.validators['in']).toBeDefined();
+        expect(service.validators['precision']).toBeDefined();
+        expect(service.validators['scale']).toBeDefined();
+        expect(service.validators['alphanumeric']).toBeDefined();
+        expect(service.validators['lowerCase']).toBeDefined();
+        expect(service.validators['specials']).toBeDefined();
+        expect(service.validators['upperCase']).toBeDefined();
+        expect(service.validators['maxTime']).toBeDefined();
+        expect(service.validators['minTime']).toBeDefined();
+        expect(service.validators['minSelected']).toBeDefined();
+        expect(service.validators['maxSelected']).toBeDefined();
+        expect(service.validators['quantity']).toBeDefined();
     });
 
 

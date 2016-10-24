@@ -3,11 +3,11 @@
 
     angular
         .module('otus.validation')
-        .service('ValidationService', ValidationService);
+        .service('otusjs.validation.api.ValidationService', Service);
 
-    ValidationService.$inject = ['ValidationPoolService'];
+    Service.$inject = ['ValidationPoolService'];
 
-    function ValidationService(ValidationPoolService) {
+    function Service(ValidationPoolService) {
         var self = this;
         self.registerElement = registerElement;
         self.unregisterElement = unregisterElement;

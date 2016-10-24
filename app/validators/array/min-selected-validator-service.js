@@ -3,11 +3,11 @@
 
   angular
     .module('otus.validation')
-    .service('LowerLimitValidatorService', LowerLimitValidatorService);
+    .service('MinSelectedValidatorService', Service);
 
-  LowerLimitValidatorService.$inject = ['ValidatorResponseFactory'];
+  Service.$inject = ['ValidatorResponseFactory'];
 
-  function LowerLimitValidatorService(ValidatorResponseFactory) {
+  function Service(ValidatorResponseFactory) {
     var self = this;
     self.execute = execute;
 
@@ -16,7 +16,7 @@
       if (angular.equals(answer.data, {})) {
         return ValidatorResponseFactory.create(answer, data, true);
       }
-      var result = (answer.data >= data.reference);
+      var result = (answer.data.length >= data.reference);
       return ValidatorResponseFactory.create(answer, data, result);
     }
   }

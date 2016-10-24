@@ -1,11 +1,11 @@
-describe('ValidationService', function() {
+describe('otusjs.validation.api.ValidationService', function() {
     var mocks = {};
 
     beforeEach(function() {
         module('otus.validation');
 
         inject(function(_$injector_) {
-            service = _$injector_.get('ValidationService', {
+            service = _$injector_.get('otusjs.validation.api.ValidationService', {
                 'ValidationPoolService': mock(_$injector_, 'ValidationPoolService')
             });
             ElementRegisterFactory = _$injector_.get('ElementRegisterFactory');
