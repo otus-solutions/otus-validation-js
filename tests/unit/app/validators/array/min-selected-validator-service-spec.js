@@ -1,7 +1,11 @@
 describe('MinSelectedValidatorService', function() {
 
+  var Mock = {};
+
   beforeEach(function() {
     module('otus.validation');
+
+    mockCheckboxAnswers();
 
     inject(function(_$injector_) {
       service = _$injector_.get('MinSelectedValidatorService');
@@ -19,9 +23,9 @@ describe('MinSelectedValidatorService', function() {
     expect(response.result).toEqual(true);
   });
 
-  it('should return FALSE when the answer.data array not contains the minimum requested on reference', function() {
+  it('should return FALSE when the answer.data array not contains the minimum requested of checked elements on reference', function() {
     var answer = {
-      'data': [true, true]
+      'data': [Mock.checkboxAnswerTrue, Mock.checkboxAnswerTrue, Mock.checkboxAnswerFalse]
     };
     var data = {
       'reference': 3
@@ -31,9 +35,9 @@ describe('MinSelectedValidatorService', function() {
     expect(response.result).toEqual(false);
   });
 
-  it('should return TRUE when the answer.data array contains the minimum requested on reference', function() {
+  it('should return TRUE when the answer.data array contains the minimum requested of checked elements on reference', function() {
     var answer = {
-      'data': [true, true]
+      'data': [Mock.checkboxAnswerTrue, Mock.checkboxAnswerTrue, Mock.checkboxAnswerFalse]
     };
     var data = {
       'reference': 1
@@ -43,9 +47,9 @@ describe('MinSelectedValidatorService', function() {
     expect(response.result).toEqual(true);
   });
 
-  it('should return TRUE when the answer.data.array contains the minimum requested on reference', function() {
+  it('should return TRUE when the answer.data.array contains the minimum requested of checked elements on reference', function() {
     var answer = {
-      'data': [true, true]
+      'data': [Mock.checkboxAnswerTrue, Mock.checkboxAnswerTrue, Mock.checkboxAnswerFalse]
     };
     var data = {
       'reference': 2
@@ -54,5 +58,17 @@ describe('MinSelectedValidatorService', function() {
     var response = service.execute(answer, data);
     expect(response.result).toEqual(true);
   });
+
+  function mockCheckboxAnswers() {
+    Mock.checkboxAnswerTrue = {
+      option: "optionID",
+      state: true
+    }
+
+    Mock.checkboxAnswerFalse = {
+      option: "optionID",
+      state: false
+    }
+  }
 
 });

@@ -16,9 +16,20 @@
       if (angular.equals(answer.data, {})) {
         return ValidatorResponseFactory.create(answer, data, true);
       }
-      var result = (answer.data.length === data.reference);
+      var result = (_getTrueOccurrences(answer.data).length === data.reference);
       return ValidatorResponseFactory.create(answer, data, result);
     }
+
+    function _getTrueOccurrences(array) {
+      var arrayWithTrueValues = array.filter(function(checkboxAnswerObject) {
+        if (checkboxAnswerObject.state) {
+          return checkboxAnswerObject;
+        }
+      });
+
+      return arrayWithTrueValues;
+    }
+
   }
 
 }());
