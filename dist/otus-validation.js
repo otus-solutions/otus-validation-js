@@ -10,11 +10,11 @@
 
     angular
         .module('otus.validation')
-        .service('ValidationService', ValidationService);
+        .service('otusjs.validation.api.ValidationService', Service);
 
-    ValidationService.$inject = ['ValidationPoolService'];
+    Service.$inject = ['ValidationPoolService'];
 
-    function ValidationService(ValidationPoolService) {
+    function Service(ValidationPoolService) {
         var self = this;
         self.registerElement = registerElement;
         self.unregisterElement = unregisterElement;
@@ -76,14 +76,16 @@
         'DateInValidatorService', 'LowerLimitValidatorService', 'MaxDateValidatorService', 'MaxLengthValidatorService',
         'MinDateValidatorService', 'MinLengthValidatorService', 'PastDateValidatorService', 'UpperLimitValidatorService',
         'InValidatorService', 'PrecisionValidatorService', 'ScaleValidatorService', 'AlphanumericValidatorService', 'LowerCaseValidatorService',
-        'SpecialsValidatorService', 'UpperCaseValidatorService', 'MaxTimeValidatorService', 'MinTimeValidatorService'
+        'SpecialsValidatorService', 'UpperCaseValidatorService', 'MaxTimeValidatorService', 'MinTimeValidatorService', 'MinSelectedValidatorService',
+        'MaxSelectedValidatorService', 'QuantityValidatorService'
     ];
 
     function ValidationHubService(MandatoryValidatorService, DistinctValidatorService, FutureDateValidatorService,
         DateInValidatorService, LowerLimitValidatorService, MaxDateValidatorService, MaxLengthValidatorService,
         MinDateValidatorService, MinLengthValidatorService, PastDateValidatorService, UpperLimitValidatorService, InValidatorService,
         PrecisionValidatorService, ScaleValidatorService, AlphanumericValidatorService, LowerCaseValidatorService, SpecialsValidatorService,
-        UpperCaseValidatorService, MaxTimeValidatorService, MinTimeValidatorService) {
+        UpperCaseValidatorService, MaxTimeValidatorService, MinTimeValidatorService, MinSelectedValidatorService, MaxSelectedValidatorService,
+        QuantityValidatorService) {
 
         var self = this;
 
@@ -108,6 +110,10 @@
             'upperCase': UpperCaseValidatorService,
             'maxTime': MaxTimeValidatorService,
             'minTime': MinTimeValidatorService,
+            'minSelected': MinSelectedValidatorService,
+            'maxSelected': MaxSelectedValidatorService,
+            'quantity': QuantityValidatorService
+
         };
     }
 
@@ -451,6 +457,114 @@
 }());
 
 (function() {
+  'use strict';
+
+  angular
+    .module('otus.validation')
+    .service('MaxSelectedValidatorService', Service);
+
+  Service.$inject = ['ValidatorResponseFactory'];
+
+  function Service(ValidatorResponseFactory) {
+    var self = this;
+    self.execute = execute;
+
+    function execute(answer, data) {
+
+      if (angular.equals(answer.data, {})) {
+        return ValidatorResponseFactory.create(answer, data, true);
+      }
+      var result = (_getTrueOccurrences(answer.data).length <= data.reference);
+      return ValidatorResponseFactory.create(answer, data, result);
+    }
+
+    function _getTrueOccurrences(array) {
+      var arrayWithTrueValues = array.filter(function(checkboxAnswerObject) {
+        if (checkboxAnswerObject.state) {
+          return checkboxAnswerObject;
+        }
+      });
+
+      return arrayWithTrueValues;
+    }
+
+  }
+
+}());
+
+(function() {
+  'use strict';
+
+  angular
+    .module('otus.validation')
+    .service('MinSelectedValidatorService', Service);
+
+  Service.$inject = ['ValidatorResponseFactory'];
+
+  function Service(ValidatorResponseFactory) {
+    var self = this;
+    self.execute = execute;
+
+    function execute(answer, data) {
+
+      if (angular.equals(answer.data, {})) {
+        return ValidatorResponseFactory.create(answer, data, true);
+      }
+      var result = (_getTrueOccurrences(answer.data).length >= data.reference);
+      return ValidatorResponseFactory.create(answer, data, result);
+    }
+
+    function _getTrueOccurrences(array) {
+      var arrayWithTrueValues = array.filter(function(checkboxAnswerObject) {
+        if (checkboxAnswerObject.state) {
+          return checkboxAnswerObject;
+        }
+      });
+
+      return arrayWithTrueValues;
+    }
+
+  }
+
+}());
+
+(function() {
+  'use strict';
+
+  angular
+    .module('otus.validation')
+    .service('QuantityValidatorService', Service);
+
+  Service.$inject = ['ValidatorResponseFactory'];
+
+  function Service(ValidatorResponseFactory) {
+    var self = this;
+    self.execute = execute;
+
+    function execute(answer, data) {
+
+      if (angular.equals(answer.data, {})) {
+        return ValidatorResponseFactory.create(answer, data, true);
+      }
+      var result = (_getTrueOccurrences(answer.data).length === data.reference);
+      return ValidatorResponseFactory.create(answer, data, result);
+    }
+
+    function _getTrueOccurrences(array) {
+      var arrayWithTrueValues = array.filter(function(checkboxAnswerObject) {
+        if (checkboxAnswerObject.state) {
+          return checkboxAnswerObject;
+        }
+      });
+
+      return arrayWithTrueValues;
+    }
+
+  }
+
+}());
+
+(function() {
     'use strict';
 
     angular
@@ -476,27 +590,27 @@
 }());
 
 (function() {
-    'use strict';
+  'use strict';
 
-    angular
-        .module('otus.validation')
-        .service('LowerLimitValidatorService', LowerLimitValidatorService);
+  angular
+    .module('otus.validation')
+    .service('LowerLimitValidatorService', LowerLimitValidatorService);
 
-    LowerLimitValidatorService.$inject = ['ValidatorResponseFactory'];
+  LowerLimitValidatorService.$inject = ['ValidatorResponseFactory'];
 
-    function LowerLimitValidatorService(ValidatorResponseFactory) {
-        var self = this;
-        self.execute = execute;
+  function LowerLimitValidatorService(ValidatorResponseFactory) {
+    var self = this;
+    self.execute = execute;
 
-        function execute(answer, data) {
+    function execute(answer, data) {
 
-            if (angular.equals(answer.data, {})) {
-                return ValidatorResponseFactory.create(answer, data, true);
-            }
-            var result = (answer.data >= data.reference);
-            return ValidatorResponseFactory.create(answer, data, result);
-        }
+      if (angular.equals(answer.data, {})) {
+        return ValidatorResponseFactory.create(answer, data, true);
+      }
+      var result = (answer.data >= data.reference);
+      return ValidatorResponseFactory.create(answer, data, result);
     }
+  }
 
 }());
 
@@ -742,9 +856,7 @@
         }
 
         function _compareTime(answer, reference) {
-            console.log(answer);
             var formatedAnswer = String(answer).match(/([01]\d|2[0-3]):([0-5]\d):([0-5]\d)/);
-            console.log(formatedAnswer);
             var formatedReference = String(reference).match(/([01]\d|2[0-3]):([0-5]\d):([0-5]\d)/);
             var date = new Date();
             var dateAnswer = new Date(date.getFullYear(), date.getMonth(), date.getDate(), Number(formatedAnswer[1]), Number(formatedAnswer[2]), Number(formatedAnswer[3]));
@@ -777,8 +889,8 @@
         }
 
         function _compareTime(answer, reference) {
-            var formatedAnswer = answer.match(/([01]\d|2[0-3]):([0-5]\d):([0-5]\d)/);
-            var formatedReference = reference.match(/([01]\d|2[0-3]):([0-5]\d):([0-5]\d)/);
+            var formatedAnswer = String(answer).match(/([01]\d|2[0-3]):([0-5]\d):([0-5]\d)/);
+            var formatedReference = String(reference).match(/([01]\d|2[0-3]):([0-5]\d):([0-5]\d)/);
             var date = new Date();
             var dateAnswer = new Date(date.getFullYear(), date.getMonth(), date.getDate(), Number(formatedAnswer[1]), Number(formatedAnswer[2]), Number(formatedAnswer[3]));
             var dateReference = new Date(date.getFullYear(), date.getMonth(), date.getDate(), Number(formatedReference[1]), Number(formatedReference[2]), Number(formatedReference[3]));
