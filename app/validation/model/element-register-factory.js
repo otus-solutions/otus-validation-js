@@ -33,8 +33,11 @@
 
         function runAllValidators(callback) {
             var validationResponse = ValidationResponseFactory.create(self.id);
+
             self.validators.forEach(function(element, index, array) {
+              if (element.name !== 'accept') {
                 validationResponse.addValidatorResponse(element.execute());
+              }
             });
 
             callback(validationResponse);
