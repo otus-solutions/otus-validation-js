@@ -19,13 +19,23 @@
             return ValidatorResponseFactory.create(answer, data, result);
         }
 
+        /**
+        *
+        * TODO When the param reference be standardized on Studio(Time validator)
+        * the setters below won't be necessary.
+        if
+          reference is miliseconds - remove dateReference and getTime
+        else
+          remove dateReference and keep dateTime
+        */
         function _compareTime(answer, reference) {
-            var formatedAnswer = String(answer).match(/([01]\d|2[0-3]):([0-5]\d):([0-5]\d)/);
-            var formatedReference = String(reference).match(/([01]\d|2[0-3]):([0-5]\d):([0-5]\d)/);
-            var date = new Date();
-            var dateAnswer = new Date(date.getFullYear(), date.getMonth(), date.getDate(), Number(formatedAnswer[1]), Number(formatedAnswer[2]), Number(formatedAnswer[3]));
-            var dateReference = new Date(date.getFullYear(), date.getMonth(), date.getDate(), Number(formatedReference[1]), Number(formatedReference[2]), Number(formatedReference[3]));
-            return dateAnswer >= dateReference;
+            var dateReference = new Date(reference);
+
+            dateReference.setDate(1);
+            dateReference.setMonth(0);
+            dateReference.setFullYear(1970);
+
+            return answer >= dateReference.getTime();
         }
     }
 

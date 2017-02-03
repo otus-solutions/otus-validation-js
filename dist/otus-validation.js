@@ -369,6 +369,157 @@
 
     angular
         .module('otus.validation')
+        .service('DateInValidatorService', DateInValidatorService);
+
+    DateInValidatorService.$inject = ['ValidatorResponseFactory'];
+
+    function DateInValidatorService(ValidatorResponseFactory) {
+        var self = this;
+        self.execute = execute;
+
+        function execute(answer, data) {
+
+            if (angular.equals(answer.data, {})) {
+                return ValidatorResponseFactory.create(answer, data, true);
+            }
+
+            var formatedAnswer = new Date(answer.data).setHours(0, 0, 0, 0);
+            var initialDate = new Date(data.reference.initial).setHours(0, 0, 0, 0);
+            var endDate = new Date(data.reference.end).setHours(0, 0, 0, 0);
+            var result = (endDate >= formatedAnswer && formatedAnswer >= initialDate);
+            return ValidatorResponseFactory.create(answer, data, result);
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otus.validation')
+        .service('FutureDateValidatorService', FutureDateValidatorService);
+
+    FutureDateValidatorService.$inject = ['ValidatorResponseFactory'];
+
+    function FutureDateValidatorService(ValidatorResponseFactory) {
+        var self = this;
+        self.execute = execute;
+
+        function execute(answer, data) {
+
+            if (angular.equals(answer.data, {})) {
+                return ValidatorResponseFactory.create(answer, data, true);
+            }
+
+            var result;
+            if (data.reference === true) {
+                var formatedAnswer = new Date(answer.data).setHours(0, 0, 0, 0);
+                var todayDate = new Date().setHours(0, 0, 0, 0);
+                result = (formatedAnswer >= todayDate);
+            } else {
+                result = true;
+            }
+            return ValidatorResponseFactory.create(answer, data, result);
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otus.validation')
+        .service('MaxDateValidatorService', MaxDateValidatorService);
+
+    MaxDateValidatorService.$inject = ['ValidatorResponseFactory'];
+
+    function MaxDateValidatorService(ValidatorResponseFactory) {
+        var self = this;
+        self.execute = execute;
+
+        function execute(answer, data) {
+
+            if (angular.equals(answer.data, {})) {
+                return ValidatorResponseFactory.create(answer, data, true);
+            }
+
+            var formatedAnswer = new Date(answer.data);
+            formatedAnswer.setHours(0, 0, 0, 0);
+            var maxDate = new Date(data.reference);
+            maxDate.setHours(0, 0, 0, 0);
+            var result = (formatedAnswer <= maxDate);
+            return ValidatorResponseFactory.create(answer, data, result);
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otus.validation')
+        .service('MinDateValidatorService', MinDateValidatorService);
+
+    MinDateValidatorService.$inject = ['ValidatorResponseFactory'];
+
+    function MinDateValidatorService(ValidatorResponseFactory) {
+        var self = this;
+        self.execute = execute;
+
+        function execute(answer, data) {
+            if (angular.equals(answer.data, {})) {
+                return ValidatorResponseFactory.create(answer, data, true);
+            }
+            var formatedAnswer = new Date(answer.data);
+            formatedAnswer.setHours(0, 0, 0, 0);
+            var minDate = new Date(data.reference);
+            minDate.setHours(0, 0, 0, 0);
+            var result = (formatedAnswer >= minDate);
+            return ValidatorResponseFactory.create(answer, data, result);
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otus.validation')
+        .service('PastDateValidatorService', PastDateValidatorService);
+
+    PastDateValidatorService.$inject = ['ValidatorResponseFactory'];
+
+    function PastDateValidatorService(ValidatorResponseFactory) {
+        var self = this;
+        self.execute = execute;
+
+        function execute(answer, data) {
+            if (angular.equals(answer.data, {})) {
+                return ValidatorResponseFactory.create(answer, data, true);
+            }
+            var result;
+            if (data.reference === true) {
+                var formatedAnswer = new Date(answer.data).setHours(0, 0, 0, 0);
+                var todayDate = new Date().setHours(0, 0, 0, 0);
+                result = (formatedAnswer <= todayDate);
+            } else {
+                result = true;
+            }
+            return ValidatorResponseFactory.create(answer, data, result);
+        }
+    }
+
+}());
+
+(function() {
+    'use strict';
+
+    angular
+        .module('otus.validation')
         .service('DistinctValidatorService', DistinctValidatorService);
 
     DistinctValidatorService.$inject = ['ValidatorResponseFactory'];
@@ -551,157 +702,6 @@
 
     angular
         .module('otus.validation')
-        .service('DateInValidatorService', DateInValidatorService);
-
-    DateInValidatorService.$inject = ['ValidatorResponseFactory'];
-
-    function DateInValidatorService(ValidatorResponseFactory) {
-        var self = this;
-        self.execute = execute;
-
-        function execute(answer, data) {
-
-            if (angular.equals(answer.data, {})) {
-                return ValidatorResponseFactory.create(answer, data, true);
-            }
-
-            var formatedAnswer = new Date(answer.data).setHours(0, 0, 0, 0);
-            var initialDate = new Date(data.reference.initial).setHours(0, 0, 0, 0);
-            var endDate = new Date(data.reference.end).setHours(0, 0, 0, 0);
-            var result = (endDate >= formatedAnswer && formatedAnswer >= initialDate);
-            return ValidatorResponseFactory.create(answer, data, result);
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otus.validation')
-        .service('FutureDateValidatorService', FutureDateValidatorService);
-
-    FutureDateValidatorService.$inject = ['ValidatorResponseFactory'];
-
-    function FutureDateValidatorService(ValidatorResponseFactory) {
-        var self = this;
-        self.execute = execute;
-
-        function execute(answer, data) {
-
-            if (angular.equals(answer.data, {})) {
-                return ValidatorResponseFactory.create(answer, data, true);
-            }
-
-            var result;
-            if (data.reference === true) {
-                var formatedAnswer = new Date(answer.data).setHours(0, 0, 0, 0);
-                var todayDate = new Date().setHours(0, 0, 0, 0);
-                result = (formatedAnswer >= todayDate);
-            } else {
-                result = true;
-            }
-            return ValidatorResponseFactory.create(answer, data, result);
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otus.validation')
-        .service('MaxDateValidatorService', MaxDateValidatorService);
-
-    MaxDateValidatorService.$inject = ['ValidatorResponseFactory'];
-
-    function MaxDateValidatorService(ValidatorResponseFactory) {
-        var self = this;
-        self.execute = execute;
-
-        function execute(answer, data) {
-
-            if (angular.equals(answer.data, {})) {
-                return ValidatorResponseFactory.create(answer, data, true);
-            }
-
-            var formatedAnswer = new Date(answer.data);
-            formatedAnswer.setHours(0, 0, 0, 0);
-            var maxDate = new Date(data.reference);
-            maxDate.setHours(0, 0, 0, 0);
-            var result = (formatedAnswer <= maxDate);
-            return ValidatorResponseFactory.create(answer, data, result);
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otus.validation')
-        .service('MinDateValidatorService', MinDateValidatorService);
-
-    MinDateValidatorService.$inject = ['ValidatorResponseFactory'];
-
-    function MinDateValidatorService(ValidatorResponseFactory) {
-        var self = this;
-        self.execute = execute;
-
-        function execute(answer, data) {
-            if (angular.equals(answer.data, {})) {
-                return ValidatorResponseFactory.create(answer, data, true);
-            }
-            var formatedAnswer = new Date(answer.data);
-            formatedAnswer.setHours(0, 0, 0, 0);
-            var minDate = new Date(data.reference);
-            minDate.setHours(0, 0, 0, 0);
-            var result = (formatedAnswer >= minDate);
-            return ValidatorResponseFactory.create(answer, data, result);
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otus.validation')
-        .service('PastDateValidatorService', PastDateValidatorService);
-
-    PastDateValidatorService.$inject = ['ValidatorResponseFactory'];
-
-    function PastDateValidatorService(ValidatorResponseFactory) {
-        var self = this;
-        self.execute = execute;
-
-        function execute(answer, data) {
-            if (angular.equals(answer.data, {})) {
-                return ValidatorResponseFactory.create(answer, data, true);
-            }
-            var result;
-            if (data.reference === true) {
-                var formatedAnswer = new Date(answer.data).setHours(0, 0, 0, 0);
-                var todayDate = new Date().setHours(0, 0, 0, 0);
-                result = (formatedAnswer <= todayDate);
-            } else {
-                result = true;
-            }
-            return ValidatorResponseFactory.create(answer, data, result);
-        }
-    }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otus.validation')
         .service('AlphanumericValidatorService', AlphanumericValidatorService);
 
     AlphanumericValidatorService.$inject = ['ValidatorResponseFactory'];
@@ -835,35 +835,51 @@
 }());
 
 (function() {
-    'use strict';
+  'use strict';
 
-    angular
-        .module('otus.validation')
-        .service('MaxTimeValidatorService', MaxTimeValidatorService);
+  angular
+    .module('otus.validation')
+    .service('MaxTimeValidatorService', MaxTimeValidatorService);
 
-    MaxTimeValidatorService.$inject = ['ValidatorResponseFactory'];
+  MaxTimeValidatorService.$inject = ['ValidatorResponseFactory'];
 
-    function MaxTimeValidatorService(ValidatorResponseFactory) {
-        var self = this;
-        self.execute = execute;
+  function MaxTimeValidatorService(ValidatorResponseFactory) {
+    var self = this;
+    self.execute = execute;
 
-        function execute(answer, data) {
-            if (angular.equals(answer.data, {})) {
-                return ValidatorResponseFactory.create(answer, data, true);
-            }
-            var result = _compareTime(answer.data, data.reference);
-            return ValidatorResponseFactory.create(answer, data, result);
-        }
-
-        function _compareTime(answer, reference) {
-            var formatedAnswer = String(answer).match(/([01]\d|2[0-3]):([0-5]\d):([0-5]\d)/);
-            var formatedReference = String(reference).match(/([01]\d|2[0-3]):([0-5]\d):([0-5]\d)/);
-            var date = new Date();
-            var dateAnswer = new Date(date.getFullYear(), date.getMonth(), date.getDate(), Number(formatedAnswer[1]), Number(formatedAnswer[2]), Number(formatedAnswer[3]));
-            var dateReference = new Date(date.getFullYear(), date.getMonth(), date.getDate(), Number(formatedReference[1]), Number(formatedReference[2]), Number(formatedReference[3]));
-            return dateAnswer <= dateReference;
-        }
+    function execute(answer, data) {
+      if (angular.equals(answer.data, {})) {
+        return ValidatorResponseFactory.create(answer, data, true);
+      }
+      var result = _compareTime(answer.data, data.reference);
+      return ValidatorResponseFactory.create(answer, data, result);
     }
+
+    /**
+    *
+    * TODO When the param reference be standardized on Studio(Time validator)
+    * the setters below won't be necessary.
+    if
+      reference is miliseconds - remove dateReference and getTime
+    else
+      remove dateReference and keep dateTime
+    */
+
+    function _compareTime(answer, reference) {
+      var dateReference = new Date(reference);
+      dateReference.setDate(1);
+      dateReference.setMonth(0);
+      dateReference.setFullYear(1970);
+
+      var ansDate = new Date(answer);
+      ansDate.setDate(1);
+      ansDate.setMonth(0);
+      ansDate.setFullYear(1970);
+
+      return ansDate.getTime() <= dateReference.getTime();
+    }
+
+  }
 
 }());
 
@@ -888,13 +904,23 @@
             return ValidatorResponseFactory.create(answer, data, result);
         }
 
+        /**
+        *
+        * TODO When the param reference be standardized on Studio(Time validator)
+        * the setters below won't be necessary.
+        if
+          reference is miliseconds - remove dateReference and getTime
+        else
+          remove dateReference and keep dateTime
+        */
         function _compareTime(answer, reference) {
-            var formatedAnswer = String(answer).match(/([01]\d|2[0-3]):([0-5]\d):([0-5]\d)/);
-            var formatedReference = String(reference).match(/([01]\d|2[0-3]):([0-5]\d):([0-5]\d)/);
-            var date = new Date();
-            var dateAnswer = new Date(date.getFullYear(), date.getMonth(), date.getDate(), Number(formatedAnswer[1]), Number(formatedAnswer[2]), Number(formatedAnswer[3]));
-            var dateReference = new Date(date.getFullYear(), date.getMonth(), date.getDate(), Number(formatedReference[1]), Number(formatedReference[2]), Number(formatedReference[3]));
-            return dateAnswer >= dateReference;
+            var dateReference = new Date(reference);
+
+            dateReference.setDate(1);
+            dateReference.setMonth(0);
+            dateReference.setFullYear(1970);
+
+            return answer >= dateReference.getTime();
         }
     }
 
