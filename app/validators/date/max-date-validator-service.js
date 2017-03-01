@@ -19,7 +19,7 @@
 
             var formatedAnswer = new Date(answer.data);
             formatedAnswer.setHours(0, 0, 0, 0);
-            var maxDate = new Date(data.reference);
+            var maxDate = new Date(data.reference.value);
             maxDate.setHours(0, 0, 0, 0);
             var result = (formatedAnswer <= maxDate);
             return ValidatorResponseFactory.create(answer, data, result);

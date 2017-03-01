@@ -28,7 +28,7 @@ describe('MinTimeValidatorService', function() {
             'data': 'Thu Jan 01 1970 01:00:00 GMT-0300 (BRT)'
         };
         var data = {
-            'reference': 'Mon Sep 12 2016 04:00:00 GMT-0300 (BRT)'
+            'reference': {value:'Mon Sep 12 2016 04:00:00 GMT-0300 (BRT)'}
         };
 
         var response = service.execute(answer, data);
@@ -40,7 +40,7 @@ describe('MinTimeValidatorService', function() {
             'data': 'Mon Sep 12 2016 05:00:00 GMT-0300 (BRT)'
         };
         var data = {
-            'reference': 'Thu Jan 01 1970 04:00:00 GMT-0300 (BRT)'
+            'reference': {value:'Thu Jan 01 1970 04:00:00 GMT-0300 (BRT)'}
         };
 
         var response = service.execute(answer, data);
@@ -52,7 +52,7 @@ describe('MinTimeValidatorService', function() {
             'data': 'Mon Sep 12 2016 05:00:00 GMT-0300 (BRT)'
         };
         var data = {
-            'reference': 'Thu Jan 01 1970 05:00:00 GMT-0300 (BRT)'
+            'reference': {value:'Thu Jan 01 1970 05:00:00 GMT-0300 (BRT)'}
         };
 
         var response = service.execute(answer, data);

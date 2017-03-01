@@ -173,6 +173,67 @@
 }());
 
 (function() {
+  'use strict';
+
+  angular
+    .module('otus.validation')
+    .service('GlobalTimeService', Service);
+
+  Service.$inject = [];
+
+  function Service() {
+    var self = this;
+
+    /*Public Interface*/
+    self.ignoreDate = ignoreDate;
+    self.getMiliTime = getMiliTime;
+    self.immutableDateFormat = immutableDateFormat;
+    self.resetDate = resetDate;
+
+    /*The date.getMiliTime() method will return only the time part as milisseconds */
+    function getMiliTime(date) {
+      return ignoreDate(date).getTime();
+    }
+
+    /*In place edition*/
+    function resetDate(date) {
+      date.setDate(1);
+      date.setMonth(0);
+      date.setFullYear(1970);
+    }
+
+    function ignoreDate(date) {
+      var copyDate = new Date(date);
+      copyDate.setDate(1);
+      copyDate.setMonth(0);
+      copyDate.setFullYear(1970);
+      return copyDate;
+    }
+
+    function _padLeadingZero(int) {
+      if (int < 10) {
+        return '0' + int;
+      } else {
+        return '' + int;
+      }
+    }
+
+    function immutableDateFormat(date) {
+      var newDate = new Date(date.getTime());
+      var year = '' + newDate.getFullYear(),
+        month = _padLeadingZero(newDate.getMonth() + 1),
+        day = _padLeadingZero(newDate.getDate()),
+        hours = _padLeadingZero(newDate.getHours()),
+        minutes = _padLeadingZero(newDate.getMinutes()),
+        seconds = _padLeadingZero(newDate.getSeconds()),
+        milisseconds = newDate.getMilliseconds();
+
+      return year + '-' + month + '-' + day + ' ' + hours + ':' + minutes + ':' + seconds + '.' + milisseconds;
+    }
+  }
+}());
+
+(function() {
     'use strict';
 
     angular
@@ -387,8 +448,8 @@
             }
 
             var formatedAnswer = new Date(answer.data).setHours(0, 0, 0, 0);
-            var initialDate = new Date(data.reference.initial).setHours(0, 0, 0, 0);
-            var endDate = new Date(data.reference.end).setHours(0, 0, 0, 0);
+            var initialDate = new Date(data.reference.initial.value).setHours(0, 0, 0, 0);
+            var endDate = new Date(data.reference.end.value).setHours(0, 0, 0, 0);
             var result = (endDate >= formatedAnswer && formatedAnswer >= initialDate);
             return ValidatorResponseFactory.create(answer, data, result);
         }
@@ -450,7 +511,7 @@
 
             var formatedAnswer = new Date(answer.data);
             formatedAnswer.setHours(0, 0, 0, 0);
-            var maxDate = new Date(data.reference);
+            var maxDate = new Date(data.reference.value);
             maxDate.setHours(0, 0, 0, 0);
             var result = (formatedAnswer <= maxDate);
             return ValidatorResponseFactory.create(answer, data, result);
@@ -478,7 +539,7 @@
             }
             var formatedAnswer = new Date(answer.data);
             formatedAnswer.setHours(0, 0, 0, 0);
-            var minDate = new Date(data.reference);
+            var minDate = new Date(data.reference.value);
             minDate.setHours(0, 0, 0, 0);
             var result = (formatedAnswer >= minDate);
             return ValidatorResponseFactory.create(answer, data, result);
@@ -701,98 +762,6 @@
 }());
 
 (function() {
-  'use strict';
-
-  angular
-    .module('otus.validation')
-    .service('MaxTimeValidatorService', MaxTimeValidatorService);
-
-  MaxTimeValidatorService.$inject = ['ValidatorResponseFactory'];
-
-  function MaxTimeValidatorService(ValidatorResponseFactory) {
-    var self = this;
-    self.execute = execute;
-
-    function execute(answer, data) {
-      if (angular.equals(answer.data, {})) {
-        return ValidatorResponseFactory.create(answer, data, true);
-      }
-      var result = _compareTime(answer.data, data.reference);
-      return ValidatorResponseFactory.create(answer, data, result);
-    }
-
-    /**
-    *
-    * TODO When the param reference be standardized on Studio(Time validator)
-    * the setters below won't be necessary.
-    if
-      reference is miliseconds - remove dateReference and getTime
-    else
-      remove dateReference and keep dateTime
-    */
-
-    function _compareTime(answer, reference) {
-      var dateReference = new Date(reference);
-      dateReference.setDate(1);
-      dateReference.setMonth(0);
-      dateReference.setFullYear(1970);
-
-      var ansDate = new Date(answer);
-      ansDate.setDate(1);
-      ansDate.setMonth(0);
-      ansDate.setFullYear(1970);
-
-      return ansDate.getTime() <= dateReference.getTime();
-    }
-
-  }
-
-}());
-
-(function() {
-    'use strict';
-
-    angular
-        .module('otus.validation')
-        .service('MinTimeValidatorService', MinTimeValidatorService);
-
-    MinTimeValidatorService.$inject = ['ValidatorResponseFactory'];
-
-    function MinTimeValidatorService(ValidatorResponseFactory) {
-        var self = this;
-        self.execute = execute;
-
-        function execute(answer, data) {
-            if (angular.equals(answer.data, {})) {
-                return ValidatorResponseFactory.create(answer, data, true);
-            }
-            var result = _compareTime(answer.data, data.reference);
-            return ValidatorResponseFactory.create(answer, data, result);
-        }
-
-        /**
-        *
-        * TODO When the param reference be standardized on Studio(Time validator)
-        * the setters below won't be necessary.
-        if
-          reference is miliseconds - remove dateReference and getTime
-        else
-          remove dateReference and keep dateTime
-        */
-        function _compareTime(answer, reference) {
-            var dateReference = new Date(reference);
-
-            dateReference.setDate(1);
-            dateReference.setMonth(0);
-            dateReference.setFullYear(1970);
-
-            return answer >= dateReference.getTime();
-        }
-    }
-
-}());
-
-(function() {
     'use strict';
 
     angular
@@ -926,6 +895,72 @@
           return ValidatorResponseFactory.create(answer, data, true);
         }
     }
+
+}());
+
+(function() {
+  'use strict';
+
+  angular
+    .module('otus.validation')
+    .service('MaxTimeValidatorService', MaxTimeValidatorService);
+
+  MaxTimeValidatorService.$inject = [
+     'ValidatorResponseFactory',
+     'GlobalTimeService'
+  ];
+
+  function MaxTimeValidatorService(ValidatorResponseFactory, GlobalTimeService) {
+    var self = this;
+    self.execute = execute;
+
+    function execute(answer, data) {
+      if (angular.equals(answer.data, {})) {
+        return ValidatorResponseFactory.create(answer, data, true);
+      }
+      var result = _compareTime(answer.data, data.reference.value);
+      return ValidatorResponseFactory.create(answer, data, result);
+    }
+
+    function _compareTime(answer, reference) {
+      var dateReference = GlobalTimeService.getMiliTime(reference);
+      var ansRef = GlobalTimeService.getMiliTime(answer);
+      return ansRef <= dateReference;
+    }
+  }
+
+}());
+
+(function() {
+  'use strict';
+
+  angular
+    .module('otus.validation')
+    .service('MinTimeValidatorService', MinTimeValidatorService);
+
+  MinTimeValidatorService.$inject = [
+     'ValidatorResponseFactory',
+     'GlobalTimeService'
+  ];
+
+  function MinTimeValidatorService(ValidatorResponseFactory, GlobalTimeService) {
+    var self = this;
+    self.execute = execute;
+
+    function execute(answer, data) {
+      if (angular.equals(answer.data, {})) {
+        return ValidatorResponseFactory.create(answer, data, true);
+      }
+      var result = _compareTime(answer.data, data.reference.value);
+      return ValidatorResponseFactory.create(answer, data, result);
+    }
+
+    function _compareTime(answer, reference) {
+      var dateReference = GlobalTimeService.getMiliTime(reference);
+      var ansRef = GlobalTimeService.getMiliTime(answer);
+      return ansRef >= dateReference;
+    }
+  }
 
 }());
 

@@ -18,8 +18,8 @@
             }
 
             var formatedAnswer = new Date(answer.data).setHours(0, 0, 0, 0);
-            var initialDate = new Date(data.reference.initial).setHours(0, 0, 0, 0);
-            var endDate = new Date(data.reference.end).setHours(0, 0, 0, 0);
+            var initialDate = new Date(data.reference.initial.value).setHours(0, 0, 0, 0);
+            var endDate = new Date(data.reference.end.value).setHours(0, 0, 0, 0);
             var result = (endDate >= formatedAnswer && formatedAnswer >= initialDate);
             return ValidatorResponseFactory.create(answer, data, result);
         }

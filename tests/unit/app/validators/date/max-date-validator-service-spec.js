@@ -25,7 +25,7 @@ describe('MaxDateValidatorService', function() {
             'data': '1/1/2015'
         };
         var data = {
-            'reference': '1/1/2016'
+            'reference': {value:'1/1/2016'}
         };
 
         var response = service.execute(answer, data);
@@ -37,7 +37,7 @@ describe('MaxDateValidatorService', function() {
             'data': '1/1/2016'
         };
         var data = {
-            'reference': '1/1/2016'
+            'reference': {value:'1/1/2016'}
         };
 
         var response = service.execute(answer, data);
@@ -48,7 +48,7 @@ describe('MaxDateValidatorService', function() {
             'data': '2/1/2017'
         };
         var data = {
-            'reference': '1/1/2016'
+            'reference': {value:'1/1/2016'}
         };
 
         var response = service.execute(answer, data);

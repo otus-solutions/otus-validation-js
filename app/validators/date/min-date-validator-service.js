@@ -17,7 +17,7 @@
             }
             var formatedAnswer = new Date(answer.data);
             formatedAnswer.setHours(0, 0, 0, 0);
-            var minDate = new Date(data.reference);
+            var minDate = new Date(data.reference.value);
             minDate.setHours(0, 0, 0, 0);
             var result = (formatedAnswer >= minDate);
             return ValidatorResponseFactory.create(answer, data, result);
