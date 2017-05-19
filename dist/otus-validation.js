@@ -77,7 +77,7 @@
         'MinDateValidatorService', 'MinLengthValidatorService', 'PastDateValidatorService', 'UpperLimitValidatorService',
         'InValidatorService', 'PrecisionValidatorService', 'ScaleValidatorService', 'AlphanumericValidatorService', 'LowerCaseValidatorService',
         'SpecialsValidatorService', 'UpperCaseValidatorService', 'MaxTimeValidatorService', 'MinTimeValidatorService', 'MinSelectedValidatorService',
-        'MaxSelectedValidatorService', 'QuantityValidatorService'
+        'MaxSelectedValidatorService', 'QuantityValidatorService', 'ImmutableDateInvalidFormatValidatorService'
     ];
 
     function ValidationHubService(MandatoryValidatorService, DistinctValidatorService, FutureDateValidatorService,
@@ -85,7 +85,7 @@
         MinDateValidatorService, MinLengthValidatorService, PastDateValidatorService, UpperLimitValidatorService, InValidatorService,
         PrecisionValidatorService, ScaleValidatorService, AlphanumericValidatorService, LowerCaseValidatorService, SpecialsValidatorService,
         UpperCaseValidatorService, MaxTimeValidatorService, MinTimeValidatorService, MinSelectedValidatorService, MaxSelectedValidatorService,
-        QuantityValidatorService) {
+        QuantityValidatorService, ImmutableDateInvalidFormatValidatorService) {
 
         var self = this;
 
@@ -112,8 +112,8 @@
             'minTime': MinTimeValidatorService,
             'minSelected': MinSelectedValidatorService,
             'maxSelected': MaxSelectedValidatorService,
-            'quantity': QuantityValidatorService
-
+            'quantity': QuantityValidatorService,
+            'ImmutableDate': ImmutableDateInvalidFormatValidatorService
         };
     }
 
@@ -605,6 +605,31 @@
 }());
 
 (function() {
+  'use strict';
+
+  angular
+    .module('otus.validation')
+    .service('ImmutableDateInvalidFormatValidatorService', ImmutableDateInvalidFormatValidatorService);
+
+  ImmutableDateInvalidFormatValidatorService.$inject = ['ValidatorResponseFactory'];
+
+  function ImmutableDateInvalidFormatValidatorService(ValidatorResponseFactory) {
+    var self = this;
+    self.execute = execute;
+
+    function execute(answer, data) {
+        var result = true;
+        if(answer.data === "invalid format") {
+          result = false;
+        }
+        return ValidatorResponseFactory.create(answer, data, result);
+    }
+
+  }
+
+}());
+
+(function() {
     'use strict';
 
     angular
@@ -620,9 +645,13 @@
         function execute(answer, data) {
           var result = true;
           if (data.reference) {
-            result = (angular.equals(answer.data, {})) ? false : true;
+            result = (angular.equals(answer.data, {}) || isEmptyAnswer(answer)) ? false : true;
           }
             return ValidatorResponseFactory.create(answer, data, result);
+        }
+
+        function isEmptyAnswer(answer) {
+          return answer.data === "" ? true : false;
         }
     }
 

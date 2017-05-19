@@ -10,7 +10,7 @@
         'MinDateValidatorService', 'MinLengthValidatorService', 'PastDateValidatorService', 'UpperLimitValidatorService',
         'InValidatorService', 'PrecisionValidatorService', 'ScaleValidatorService', 'AlphanumericValidatorService', 'LowerCaseValidatorService',
         'SpecialsValidatorService', 'UpperCaseValidatorService', 'MaxTimeValidatorService', 'MinTimeValidatorService', 'MinSelectedValidatorService',
-        'MaxSelectedValidatorService', 'QuantityValidatorService'
+        'MaxSelectedValidatorService', 'QuantityValidatorService', 'ImmutableDateInvalidFormatValidatorService'
     ];
 
     function ValidationHubService(MandatoryValidatorService, DistinctValidatorService, FutureDateValidatorService,
@@ -18,7 +18,7 @@
         MinDateValidatorService, MinLengthValidatorService, PastDateValidatorService, UpperLimitValidatorService, InValidatorService,
         PrecisionValidatorService, ScaleValidatorService, AlphanumericValidatorService, LowerCaseValidatorService, SpecialsValidatorService,
         UpperCaseValidatorService, MaxTimeValidatorService, MinTimeValidatorService, MinSelectedValidatorService, MaxSelectedValidatorService,
-        QuantityValidatorService) {
+        QuantityValidatorService, ImmutableDateInvalidFormatValidatorService) {
 
         var self = this;
 
@@ -45,8 +45,8 @@
             'minTime': MinTimeValidatorService,
             'minSelected': MinSelectedValidatorService,
             'maxSelected': MaxSelectedValidatorService,
-            'quantity': QuantityValidatorService
-
+            'quantity': QuantityValidatorService,
+            'ImmutableDate': ImmutableDateInvalidFormatValidatorService
         };
     }
 

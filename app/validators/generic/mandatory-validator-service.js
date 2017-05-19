@@ -14,9 +14,13 @@
         function execute(answer, data) {
           var result = true;
           if (data.reference) {
-            result = (angular.equals(answer.data, {})) ? false : true;
+            result = (angular.equals(answer.data, {}) || isEmptyAnswer(answer)) ? false : true;
           }
             return ValidatorResponseFactory.create(answer, data, result);
+        }
+
+        function isEmptyAnswer(answer) {
+          return answer.data === "" ? true : false;
         }
     }
 
