@@ -25,40 +25,36 @@
             .pipe(gulp.dest('dist'));
     });
 
-    gulp.task('sonar', function() {
-        var options = {
-            sonar: {
-                host: {
-                    url: process.env.npm_config_sonarUrl,
-                },
-                jdbc: {
-                    url: process.env.npm_config_sonarDatabaseUrl,
-                    username: process.env.npm_config_sonarDatabaseUsername,
-                    password: process.env.npm_config_sonarDatabasePassword
-                },
-                projectKey: 'sonar:otus-validation-js',
-                projectName: 'otus-validation-js',
-                projectVersion: packageJson.version,
-                // comma-delimited string of source directories
-                sources: 'app',
-                language: 'js',
-                sourceEncoding: 'UTF-8',
-                exec: {
-                    maxBuffer: 1024 * 1024
-                },
-                javascript: {
-                    lcov: {
-                        reportPath: 'target/test-coverage/report-lcov/lcov.info'
-                    }
-                }
-            }
-        };
+  gulp.task('sonar', function () {
+    var options = {
+      sonar: {
+        host: {
+          url: process.env.npm_config_sonarUrl,
+        },
+        login: process.env.npm_config_sonarDatabaseUsername,
+        password: process.env.npm_config_sonarDatabasePassword,
+        projectKey: 'sonar:' + packageJson.name,
+        projectName: packageJson.name,
+        projectVersion: packageJson.version,
+        sources: 'app',
+        language: 'js',
+        sourceEncoding: 'UTF-8',
+        exec: {
+          maxBuffer: 1024 * 1024
+        },
+        javascript: {
+          lcov: {
+            reportPath: 'target/test-coverage/report-lcov/lcov.info'
+          }
+        }
+      }
+    };
 
-        return gulp.src('thisFileDoesNotExist.js', {
-                read: false
-            })
-            .pipe(sonar(options));
-    });
+    return gulp.src('thisFileDoesNotExist.js', {
+      read: false
+    })
+      .pipe(sonar(options));
+  });
 
 
 }());
